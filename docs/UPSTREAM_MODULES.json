@@ -1,0 +1,1459 @@
+[
+  {
+    "file": "api-client.js",
+    "lines": 195,
+    "functions": [
+      "normalizeEndpoint",
+      "isSameEndpoint",
+      "isUnifiedImageEndpoint",
+      "isImageGenerationEndpoint",
+      "resolveImagePollEndpoint",
+      "authHeaders",
+      "getEndpointMeta",
+      "resolveEndpoint",
+      "registerEndpoint",
+      "parseResponse",
+      "postJson",
+      "postEndpoint",
+      "videoSubmit",
+      "videoPoll",
+      "imageSubmit",
+      "imagePoll",
+      "balanceQuery"
+    ],
+    "exports": [
+      "VeoApi"
+    ]
+  },
+  {
+    "file": "app-bootstrap.js",
+    "lines": 79,
+    "functions": [
+      "getViewport",
+      "getBoard",
+      "getConsole",
+      "handleDocumentClick",
+      "handleViewportDoubleClick",
+      "boot",
+      "bind"
+    ],
+    "exports": [
+      "VeoAppBootstrap"
+    ]
+  },
+  {
+    "file": "app-shell.js",
+    "lines": 440,
+    "functions": [
+      "showErrorModal",
+      "closeErrorModal",
+      "showAnnouncement",
+      "closeAnnouncement",
+      "hashPassword",
+      "isReducedMotion",
+      "ensureRouteTransitionLayer",
+      "startRouteTransition",
+      "showToast",
+      "bindGlobalTooltips",
+      "openHelpModal",
+      "closeHelpModal",
+      "handleAuthError",
+      "openLightbox",
+      "markAppShellReady",
+      "normalizeThemeMode",
+      "applyThemeMode",
+      "initThemeMode",
+      "activateLoginPanel",
+      "resize",
+      "animate",
+      "startLoginTransition",
+      "handleLoginSubmit"
+    ],
+    "exports": [
+      "navigateWithTransition",
+      "toggleThemeMode",
+      "toggleMinimap",
+      "VeoAppShell",
+      "showToast",
+      "alert",
+      "handleAuthError",
+      "openHelpModal",
+      "closeHelpModal",
+      "openLightbox"
+    ]
+  },
+  {
+    "file": "app.js",
+    "lines": 864,
+    "functions": [
+      "normalizeWebhookEndpointForCompare",
+      "isSameWebhookEndpoint",
+      "isImageGenerationWebhookEndpoint",
+      "isUnifiedImageWebhookEndpoint",
+      "resolveImgGenPollEndpoint",
+      "blobsToBase64Sequential",
+      "buildImgGenImagePayloadFields",
+      "getImgGenMaxReferenceCount",
+      "limitImgGenReferencesForRoute",
+      "enforceImgGenRouteReferenceLimit",
+      "resolveImgGenNetworkEncodeOptions",
+      "buildBlobSignature",
+      "readImageMeta",
+      "clearTaskPolling",
+      "buildImgGenPollKey",
+      "clearImgGenPolling",
+      "hasImgGenPolling",
+      "resolveTaskIdFromCardElement",
+      "removeActiveTask",
+      "toggleDrawer",
+      "toggleMaterialDrawer",
+      "handleAuthError",
+      "renderMaterialLibrary",
+      "deduplicateMaterials",
+      "clearAllMaterials",
+      "deleteMaterial",
+      "updateBillingUI",
+      "openBillingModal",
+      "closeBillingModal",
+      "updateEstimatedCost",
+      "updateBatchCount",
+      "alignSelectedCards",
+      "showToast",
+      "openHelpModal",
+      "closeHelpModal",
+      "fitTaskInsideFrameBounds",
+      "createFrame",
+      "checkGroupDrop",
+      "clientToBoard",
+      "getEventClientPoint",
+      "normalizeTaskPosition",
+      "getTaskFallbackSize",
+      "createDefaultImageGenTask",
+      "createImageGenNode",
+      "measureTaskAABB",
+      "getVisibleWorldRect",
+      "clampWorldValue",
+      "resolveLinkedNodePosition",
+      "selectAndFocusTaskIds",
+      "detectToolPluginType",
+      "clampCanvasScale",
+      "cancelCameraAnimation",
+      "cancelCanvasInertia",
+      "setCanvasMoving",
+      "beginCanvasPan",
+      "wakeMinimap",
+      "updateDynamicGrid",
+      "applyCanvasTransform",
+      "zoomCanvasAt",
+      "panCanvasBy",
+      "animateCameraTo",
+      "recordPanSample",
+      "startCanvasInertia",
+      "getCardWorldSize",
+      "syncCardViewportMetrics",
+      "updateViewportCulling",
+      "scheduleViewportCulling",
+      "getSelectedCanvasElements",
+      "ensureSelectionToolbar",
+      "updateSelectionToolbar",
+      "requestSelectionToolbarUpdate",
+      "buildSelectionCandidates",
+      "clearSelection",
+      "consumeNestedCanvasWheel",
+      "startFrameResize",
+      "bindCardDrag",
+      "getDraggingCardInfo",
+      "toggleImgGenStageRail",
+      "focusImgGenStageCard",
+      "renameImgGenStageLabel",
+      "isImgGenTaskStageDocked",
+      "buildDuplicateTaskPayload",
+      "sanitizeImgGenCloneState",
+      "duplicateSelectedTasks",
+      "getSelectedWorldBounds",
+      "focusSelectedTasks",
+      "focusTaskById",
+      "deleteSelectedTasks",
+      "renderMinimap",
+      "syncMinimapViewport",
+      "handleMinimapClick",
+      "openLightbox",
+      "exportWorkspace",
+      "importWorkspace",
+      "parseDroppedImage",
+      "getTaskReusableImage",
+      "sendTaskImageToConsole",
+      "closeCanvasContextMenu",
+      "openCanvasTaskContextMenu",
+      "applyImgGenCardFrame",
+      "bindImgGenCardResizeSave",
+      "renderCard",
+      "bindMainConsoleDrop",
+      "toggleRefPopover",
+      "syncVideoConsoleModeUI",
+      "toggleConsoleAdvanced",
+      "toggleVideoConsoleMinimized",
+      "expandVideoConsole",
+      "setConsoleFrameImage",
+      "addConsoleReferenceImage",
+      "switchMode",
+      "updateInputMode",
+      "updateModel",
+      "updateRatio",
+      "updateEnhance",
+      "updateUpsample",
+      "updateAutoRetry",
+      "formatImgGenMoney",
+      "extractImgGenUsage",
+      "calculateImgGenBilling",
+      "handleMultiRefs",
+      "removeReference",
+      "clearReferences",
+      "renderReferences",
+      "handleSingleFrame",
+      "clearFrame",
+      "submitBatchTask",
+      "executeSubmission",
+      "retryTask",
+      "startTaskPolling",
+      "reuseTask",
+      "generateCardHTML",
+      "renderBoard",
+      "removeTask",
+      "downloadVideo",
+      "duplicateTask",
+      "clampNumber",
+      "snapToGrid",
+      "parseImgSizeValue",
+      "detectProPresetFromSize",
+      "buildCustomSizeByResolution",
+      "enforceProSizeRules",
+      "resolveImgGenSize",
+      "normalizeImgGenRoute",
+      "getImgGenModelForRoute",
+      "ensureImgGenState",
+      "resolveImgGenMode",
+      "getImgGenPreviewFingerprint",
+      "scheduleNextPaint",
+      "waitNextPaint",
+      "forceRenderImgGenPreviewPanel",
+      "scrollImgGenPreviewToItem"
+    ],
+    "exports": []
+  },
+  {
+    "file": "billing.js",
+    "lines": 321,
+    "functions": [
+      "byId",
+      "toFiniteNumber",
+      "showToastSafe",
+      "formatMoney",
+      "formatBalanceValue",
+      "normalizeResponsePayload",
+      "extractBalance",
+      "loadCachedBalance",
+      "saveCachedBalance",
+      "getManualRemainMs",
+      "scheduleCooldownTick",
+      "renderTopBarBalance",
+      "renderLocalUsageStats",
+      "renderModalBalance",
+      "updateTopBar",
+      "buildBalancePayload",
+      "refreshBalance",
+      "refreshBalanceAfterUsage",
+      "openModal",
+      "closeModal",
+      "updateEstimatedCost",
+      "updateBatchCount"
+    ],
+    "exports": [
+      "showToast",
+      "handleAuthError",
+      "getVideoUnitCost",
+      "VeoBilling"
+    ]
+  },
+  {
+    "file": "canvas-camera.js",
+    "lines": 254,
+    "functions": [
+      "callHook",
+      "finite",
+      "configure",
+      "clampScale",
+      "clientToBoard",
+      "getVisibleWorldRect",
+      "cancelAnimation",
+      "cancelInertia",
+      "setMoving",
+      "wakeMinimap",
+      "updateDynamicGrid",
+      "applyTransform",
+      "zoomAt",
+      "panBy",
+      "animateTo",
+      "recordPanSample",
+      "startInertia"
+    ],
+    "exports": [
+      "toFiniteNumber",
+      "VeoCanvasCamera"
+    ]
+  },
+  {
+    "file": "canvas-cards.js",
+    "lines": 143,
+    "functions": [
+      "configure",
+      "callHook",
+      "toFiniteNumber",
+      "clamp",
+      "applyImageCardFrame",
+      "bindImageCardResizeSave",
+      "getSyncSnapshot",
+      "syncKeyToAttribute",
+      "shouldRefresh",
+      "applySyncAttributes"
+    ],
+    "exports": [
+      "VeoCanvasCards"
+    ]
+  },
+  {
+    "file": "canvas-context-menu.js",
+    "lines": 129,
+    "functions": [
+      "configure",
+      "callHook",
+      "getTaskReusableImage",
+      "getLiveTask",
+      "sendTaskImageToConsole",
+      "close",
+      "menuButton",
+      "open",
+      "bindGlobalClose"
+    ],
+    "exports": [
+      "VeoCanvasContextMenu"
+    ]
+  },
+  {
+    "file": "canvas-interactions.js",
+    "lines": 378,
+    "functions": [
+      "configure",
+      "callHook",
+      "toFiniteNumber",
+      "setLastPointer",
+      "beginCanvasPan",
+      "handleGlobalMouseDown",
+      "dragSelectedChildren",
+      "updateDragPosition",
+      "handleGlobalMouseMove",
+      "isSpacePanInteractiveTarget",
+      "handleSpacePanMouseDown",
+      "handleViewportMouseDown",
+      "handleGlobalMouseUp",
+      "consumeNestedCanvasWheel",
+      "handleViewportWheel",
+      "handleResize",
+      "handleKeyDown",
+      "handleKeyUp",
+      "getInteractiveDragTarget",
+      "bindCardDrag",
+      "startFrameResize",
+      "bind",
+      "getPointerState"
+    ],
+    "exports": [
+      "VeoCanvasInteractions"
+    ]
+  },
+  {
+    "file": "canvas-layout.js",
+    "lines": 345,
+    "functions": [
+      "configure",
+      "callHook",
+      "toFiniteNumber",
+      "normalizeTaskPosition",
+      "getTaskFallbackSize",
+      "measureTaskAABB",
+      "clampWorldValue",
+      "fitTaskInsideFrameBounds",
+      "createFrame",
+      "checkGroupDrop",
+      "alignSelectedCards",
+      "resolveLinkedNodePosition",
+      "getSelectedWorldBounds",
+      "focusSelectedTasks",
+      "selectAndFocusTaskIds",
+      "focusTaskById",
+      "detectToolPluginType"
+    ],
+    "exports": [
+      "VeoCanvasLayout"
+    ]
+  },
+  {
+    "file": "canvas-renderer.js",
+    "lines": 163,
+    "functions": [
+      "configure",
+      "callHook",
+      "normalizeTaskForRender",
+      "generateCardHTML",
+      "getBoardTaskClassName",
+      "isRenderableTask",
+      "removeStaleCards",
+      "syncProcessingImagePolling",
+      "finalizeCard",
+      "renderCardShell",
+      "renderCard",
+      "renderBoard"
+    ],
+    "exports": [
+      "VeoCanvasRenderer"
+    ]
+  },
+  {
+    "file": "canvas-selection.js",
+    "lines": 146,
+    "functions": [
+      "configure",
+      "getCardId",
+      "buildSelectionCandidates",
+      "clearSelection",
+      "startMarqueeSelection",
+      "updateMarqueeSelection",
+      "finishMarqueeSelection",
+      "toggleTask",
+      "selectTask",
+      "selectVisibleCards"
+    ],
+    "exports": [
+      "VeoCanvasSelection"
+    ]
+  },
+  {
+    "file": "db.js",
+    "lines": 344,
+    "functions": [
+      "initDB",
+      "addBillingRecord",
+      "getBillingStats",
+      "getBlobUrl",
+      "revokeBlobUrl",
+      "revokeBlobUrlsByPrefix",
+      "readBlobAsDataUrl",
+      "downscaleImageBlobIfNeeded",
+      "compressImageToBlob",
+      "blobToBase64",
+      "resolveTaskSave",
+      "rejectTaskSave",
+      "flushTaskSaveQueue",
+      "enqueueTaskSave",
+      "getAllTasksDB",
+      "saveTaskDB",
+      "saveTaskBatchDB",
+      "getTaskDB",
+      "deleteTaskDB"
+    ],
+    "exports": []
+  },
+  {
+    "file": "dom-utils.js",
+    "lines": 233,
+    "functions": [
+      "cssEscapeSafe",
+      "escapeHtml",
+      "escapeAttr",
+      "sanitizeAspectRatioCss",
+      "toFiniteNumber",
+      "revokeBlobPrefixSafe",
+      "revokeBlobKeySafe",
+      "snapshotCardState",
+      "restoreCardState",
+      "patchElementAttributes",
+      "syncFormControlState",
+      "canReuseNode",
+      "morphNodeLite",
+      "morphChildrenLite",
+      "morphCardDOM"
+    ],
+    "exports": [
+      "revokeBlobUrl",
+      "VeoDom"
+    ]
+  },
+  {
+    "file": "dynamic-timer.js",
+    "lines": 44,
+    "functions": [
+      "formatElapsed",
+      "update",
+      "start",
+      "stop"
+    ],
+    "exports": [
+      "VeoDynamicTimer"
+    ]
+  },
+  {
+    "file": "excel-tool.js",
+    "lines": 939,
+    "functions": [
+      "escapeHtml",
+      "safeJsonParse",
+      "normalizeBaseUrl",
+      "getChatCompletionsUrl",
+      "clampNumber",
+      "ensureStyles",
+      "ensureShell",
+      "bindEvents",
+      "bindDrop",
+      "init",
+      "open",
+      "close",
+      "setLayer",
+      "loadSettings",
+      "saveSettings",
+      "showToast",
+      "log",
+      "setProgress",
+      "setRunning",
+      "loadScriptOnce",
+      "ensureSpreadsheetLibs",
+      "readFileAsArrayBuffer",
+      "readFileAsDataUrl",
+      "extractRowsFromSheet",
+      "findHeaderRow",
+      "rowsToObjects",
+      "parseSpreadsheetFile",
+      "handleSourceFiles",
+      "handleTemplateFile",
+      "renderAll",
+      "renderFileLists",
+      "renderTemplateFields",
+      "renderTable",
+      "renderSourcePreview",
+      "renderResultPreview",
+      "buildModelPrompt",
+      "buildMessages",
+      "generateRows",
+      "parseRowsFromModel",
+      "normalizeGeneratedRows",
+      "exportWorkbook",
+      "exportWithExcelJs",
+      "exportWithSheetJs",
+      "buildExportFilename",
+      "downloadBlob",
+      "copyJson",
+      "resetTool"
+    ],
+    "exports": [
+      "openExcelTool",
+      "closeExcelTool",
+      "VeoExcelTool"
+    ]
+  },
+  {
+    "file": "image-api-utils.js",
+    "lines": 271,
+    "functions": [
+      "buildImgGenHeaders",
+      "parseImgGenHttpResponse",
+      "unwrapImgGenResponseData",
+      "extractImageUrlsFromResponse",
+      "extractImageUrlFromResponse",
+      "extractImgGenTaskId",
+      "extractImgGenStatus",
+      "isImgGenSuccessStatus",
+      "isImgGenFailedStatus",
+      "isImgGenPendingStatus",
+      "resolveImgGenPollDelayMs",
+      "buildImgGenPollPayload",
+      "isLocalImgGenFallbackTaskId"
+    ],
+    "exports": []
+  },
+  {
+    "file": "image-card-profile.js",
+    "lines": 142,
+    "functions": [
+      "clone",
+      "profileForTask",
+      "createDefaultState",
+      "applyDefaults",
+      "getPreviewLimit",
+      "viewModel"
+    ],
+    "exports": [
+      "VeoImageCardProfile"
+    ]
+  },
+  {
+    "file": "image-config.js",
+    "lines": 29,
+    "functions": [
+      "getRefIntents"
+    ],
+    "exports": [
+      "VeoImageConfig"
+    ]
+  },
+  {
+    "file": "image-core.js",
+    "lines": 381,
+    "functions": [
+      "toNumber",
+      "clampNumber",
+      "snapToGrid",
+      "gcd",
+      "lcm",
+      "isValidProSize",
+      "buildExactRatioSize",
+      "parseSizeValue",
+      "detectProPresetFromSize",
+      "buildCustomSizeByResolution",
+      "enforceProSizeRules",
+      "resolveSize",
+      "normalizeRoute",
+      "getModelForRoute",
+      "resolveMode",
+      "formatMoney",
+      "extractUsage",
+      "calculateBilling"
+    ],
+    "exports": [
+      "VeoImageCore"
+    ]
+  },
+  {
+    "file": "image-interactions.js",
+    "lines": 334,
+    "functions": [
+      "toggleImgGenPreviewPanel",
+      "removeImgGenPreviewItem",
+      "toggleImgGenParamsPanel",
+      "toggleImgGenPromptTools",
+      "toggleImgGenMaskTools",
+      "handleImgGenPromptKeydown",
+      "updateImgGenState",
+      "updateImgGenRefControl",
+      "appendImgGenPromptTag",
+      "handleGenImageUpload",
+      "handleGenImageDrop",
+      "removeGenImage"
+    ],
+    "exports": []
+  },
+  {
+    "file": "image-mask-editor.js",
+    "lines": 807,
+    "functions": [
+      "stopMaskEditorEvent",
+      "clampImgMaskBrushSize",
+      "clampImgMaskStageHeight",
+      "syncImgGenMaskBrushControls",
+      "syncImgGenMaskStageSizeControls",
+      "persistImgGenMaskBrushSize",
+      "persistImgGenMaskStageHeight",
+      "destroyImgMaskEditor",
+      "syncImgMaskEditor",
+      "captureImgMaskFromEditor",
+      "buildImgMaskStudioKey",
+      "getImgMaskStudioEl",
+      "destroyImgMaskStudio",
+      "openImgGenMaskStudio",
+      "applyImgGenMaskStudio",
+      "closeImgGenMaskStudio",
+      "toggleImgGenMaskEditor",
+      "updateImgGenMaskBrush",
+      "updateImgGenMaskStageHeight",
+      "saveImgGenMask",
+      "clearImgGenMask",
+      "removeImgGenMask"
+    ],
+    "exports": []
+  },
+  {
+    "file": "image-normalize.js",
+    "lines": 135,
+    "functions": [
+      "getMaxReferenceCount",
+      "limitReferencesForRoute",
+      "normalizeRoute",
+      "getModelForRoute",
+      "enforceRouteReferenceLimit",
+      "ensureState"
+    ],
+    "exports": [
+      "VeoImageNormalize"
+    ]
+  },
+  {
+    "file": "image-preview-actions.js",
+    "lines": 32,
+    "functions": [
+      "sendImgGenPreviewToMask",
+      "startImgGenTaskPolling"
+    ],
+    "exports": []
+  },
+  {
+    "file": "image-preview-state.js",
+    "lines": 257,
+    "functions": [
+      "createImgGenPreviewId",
+      "normalizeImgGenPreviewHistory",
+      "getImgGenPendingCount",
+      "getVisibleImgGenPendingCount",
+      "isImgGenPreviewItemStillPending",
+      "getImgGenTaskForPreviewWrite",
+      "recalcImgGenTaskStatus",
+      "pushImgGenPendingItem",
+      "markImgGenPreviewSuccess",
+      "normalizeImgGenErrorReason",
+      "markImgGenPreviewFailed",
+      "findImgGenPreviewItem"
+    ],
+    "exports": []
+  },
+  {
+    "file": "image-preview-ui.js",
+    "lines": 99,
+    "functions": [
+      "renderImgGenPendingItem",
+      "renderImgGenFailedItem",
+      "renderImgGenPreviewFeed"
+    ],
+    "exports": [
+      "VeoImagePreviewUI"
+    ]
+  },
+  {
+    "file": "image-reference-ui.js",
+    "lines": 203,
+    "functions": [
+      "renderImgGenRatioOptions",
+      "clampImgGenRefWeight",
+      "getImgGenDefaultRefIntent",
+      "createImgGenRefControl",
+      "normalizeImgGenRefControls",
+      "renderImgGenRefIntentOptions",
+      "renderImgGenRefControl",
+      "buildImgGenRefControlPayload",
+      "renderImgGenPromptChips",
+      "renderImgGenMiniToolDock",
+      "renderImgGenSlots"
+    ],
+    "exports": [
+      "VeoImageReferenceUI"
+    ]
+  },
+  {
+    "file": "image-render.js",
+    "lines": 122,
+    "functions": [
+      "configure",
+      "callHook",
+      "toFiniteNumber",
+      "getPreviewList",
+      "getPreviewFingerprint",
+      "scheduleNextPaint",
+      "waitNextPaint",
+      "forcePreviewPanel",
+      "scrollPreviewToItem"
+    ],
+    "exports": [
+      "VeoImageRender"
+    ]
+  },
+  {
+    "file": "image-request.js",
+    "lines": 117,
+    "functions": [
+      "toNumber",
+      "resolvePromptContext",
+      "normalizeOutputCompression",
+      "measureEncodedPayloadBytes",
+      "buildUnifiedPayload",
+      "submitUnifiedOnce"
+    ],
+    "exports": [
+      "handleAuthError",
+      "VeoImageRequest"
+    ]
+  },
+  {
+    "file": "image-stage.js",
+    "lines": 440,
+    "functions": [
+      "configure",
+      "callHook",
+      "toFiniteNumber",
+      "escapeHtml",
+      "escapeAttr",
+      "ensureImageState",
+      "isDocked",
+      "mergeTask",
+      "getPendingCount",
+      "getStatus",
+      "getThumb",
+      "getThumbVersion",
+      "buildDefaultLabel",
+      "getIdentity",
+      "getTitle",
+      "getMeta",
+      "renderItem",
+      "isPointInRail",
+      "isPointInDockZone",
+      "isPointNearRail",
+      "canDockDrag",
+      "getFingerprint",
+      "render",
+      "scheduleRender",
+      "setDragOver",
+      "rename",
+      "centerTaskInViewport",
+      "dockOtherReleasedTasks",
+      "focus",
+      "dockDraggedTask",
+      "toggle",
+      "clearActiveTask"
+    ],
+    "exports": [
+      "getImgGenPendingCount",
+      "VeoImageStage"
+    ]
+  },
+  {
+    "file": "image-state.js",
+    "lines": 172,
+    "functions": [
+      "cloneTaskDeep",
+      "getImgGenPreviewStatusRank",
+      "mergeImgGenPreviewItem",
+      "getImgGenPreviewList",
+      "guardImgGenPreviewItem",
+      "updateImgGenPreviewGuard",
+      "releaseImgGenPreviewGuard",
+      "getImgGenPreviewGuardItems",
+      "getImgGenProtectedPreviewIds",
+      "mergeImgGenPreviewHistory",
+      "mergeImgGenTaskWithShadow",
+      "queueImgGenTaskUpdate",
+      "clearImgGenStateRuntime"
+    ],
+    "exports": []
+  },
+  {
+    "file": "image-submit.js",
+    "lines": 304,
+    "functions": [
+      "submitImgGen"
+    ],
+    "exports": []
+  },
+  {
+    "file": "image-tasks.js",
+    "lines": 296,
+    "functions": [
+      "buildPollKey",
+      "clearPolling",
+      "hasPolling",
+      "startPolling"
+    ],
+    "exports": [
+      "VeoImageTasks"
+    ]
+  },
+  {
+    "file": "image-ui.js",
+    "lines": 323,
+    "functions": [
+      "renderImgGenParams",
+      "renderImgGenMaskPanel",
+      "renderImgGenHelpContent",
+      "closeImgGenHelp",
+      "openImgGenHelp",
+      "renderImgGenCardHTML"
+    ],
+    "exports": []
+  },
+  {
+    "file": "launch-c.js",
+    "lines": 418,
+    "functions": [
+      "clamp",
+      "byId",
+      "cssVar",
+      "initCursor",
+      "render",
+      "initMagnetic",
+      "initHeroKinetic",
+      "initMonoGrid",
+      "resize",
+      "drawGrid",
+      "drawSweep",
+      "render",
+      "initSnapRail",
+      "setActive",
+      "scrollToIndex",
+      "initCounters",
+      "animate",
+      "frame",
+      "initScrollProgress",
+      "update",
+      "initSectionButtons",
+      "initBoot",
+      "setStep",
+      "startBoot",
+      "init"
+    ],
+    "exports": []
+  },
+  {
+    "file": "material-library.js",
+    "lines": 139,
+    "functions": [
+      "notify",
+      "toggleDrawer",
+      "openDrawer",
+      "materialTasks",
+      "groupMaterials",
+      "materialItemHtml",
+      "render",
+      "deduplicate",
+      "clearAll",
+      "deleteOne"
+    ],
+    "exports": [
+      "showToast",
+      "VeoMaterials"
+    ]
+  },
+  {
+    "file": "media-utils.js",
+    "lines": 223,
+    "functions": [
+      "finiteNumber",
+      "blobsToBase64Sequential",
+      "buildImgGenImagePayloadFields",
+      "normalizeImgGenRoute",
+      "getImgGenModelForRoute",
+      "getImgGenMaxReferenceCount",
+      "limitImgGenReferencesForRoute",
+      "resolveImgGenNetworkEncodeOptions",
+      "buildBlobSignature",
+      "readImageMeta"
+    ],
+    "exports": [
+      "createImageBitmap",
+      "VeoMedia"
+    ]
+  },
+  {
+    "file": "migration-guards.js",
+    "lines": 25,
+    "functions": [
+      "getRetiredNodeTypes",
+      "isRetiredTaskType",
+      "filterActiveTasks"
+    ],
+    "exports": [
+      "VeoMigrationGuards"
+    ]
+  },
+  {
+    "file": "minimap.js",
+    "lines": 157,
+    "functions": [
+      "configure",
+      "callHook",
+      "isRetiredTask",
+      "isBoardTask",
+      "getTaskWidth",
+      "getTaskHeight",
+      "syncViewport",
+      "render",
+      "handleClick"
+    ],
+    "exports": [
+      "VeoMinimap"
+    ]
+  },
+  {
+    "file": "model-registry.js",
+    "lines": 213,
+    "functions": [
+      "normalizeKey",
+      "cloneMeta",
+      "ensureFamily",
+      "register",
+      "registerMany",
+      "resolve",
+      "get",
+      "getFamily",
+      "list"
+    ],
+    "exports": [
+      "VeoModelRegistry"
+    ]
+  },
+  {
+    "file": "office-excel-tool.js",
+    "lines": 3014,
+    "functions": [
+      "escapeHtml",
+      "safeJsonParse",
+      "makeGeneratedWorkbookName",
+      "compareVersion",
+      "isFrontendCompatible",
+      "normalizeManualCliCommand",
+      "getManualCliCommand",
+      "getDetectedCliCommand",
+      "getConfiguredCliCommand",
+      "isUnsafeWorkspaceDir",
+      "cleanWorkspaceDir",
+      "loadSettings",
+      "saveSettingsFromForm",
+      "resetSettings",
+      "useAutoCliDetection",
+      "addLog",
+      "toast",
+      "readAsDataUrl",
+      "getClipboardImageFiles",
+      "makeId",
+      "isTextLikeMaterial",
+      "isWorkbookFile",
+      "readMaterialFile",
+      "addMaterialFiles",
+      "handleComposerPaste",
+      "removeMaterial",
+      "clearMaterials",
+      "handleComposerFiles",
+      "hasDesktopAssistant",
+      "getFileDisplayName",
+      "getParentDirectory",
+      "pickWorkbookFile",
+      "setSelectedWorkbook",
+      "pickMaterialFiles",
+      "pickWorkspaceDirectory",
+      "openTargetPath",
+      "commandCount",
+      "planWrites",
+      "isReadOnlyPlan",
+      "compactText",
+      "getActiveMaterials",
+      "buildMaterialPromptLines",
+      "escapeBatchCommandsForLegacyBridge",
+      "normalizeBatchCommandsArgv",
+      "normalizeOfficeCliArgv",
+      "findPlanIssue",
+      "normalizePlan",
+      "hasWorkbookInput",
+      "isCreateCommand",
+      "ensureCreatePlanForNoWorkbook",
+      "extractJson",
+      "repairPlannerJsonContent",
+      "buildChatCompletionsUrl",
+      "readJsonResponse",
+      "buildUserPrompt",
+      "resultTextForPlanning",
+      "buildFollowupPrompt",
+      "callPlannerModel",
+      "createLocalReadPlan",
+      "generatePlan",
+      "executePlan",
+      "postBridge",
+      "checkBridge",
+      "fetchHealth",
+      "findAssistantHealth",
+      "launchAssistant",
+      "callAssistantControl",
+      "renderBusy",
+      "clampProgress",
+      "getProgress",
+      "setProgress",
+      "renderLogProgress",
+      "switchLayer",
+      "handleFileChange",
+      "handlePickFile",
+      "handleDropFiles",
+      "handleRunModify",
+      "handlePickWorkspaceDirectory",
+      "handleResetWorkspaceDirectory",
+      "handleOpenResultFile",
+      "handleOpenResultFolder",
+      "close",
+      "render",
+      "renderWorkLayer",
+      "renderSettingsLayer",
+      "renderAssistantPanel",
+      "renderMaterialAttachments",
+      "renderPlanSummary",
+      "renderPlan",
+      "renderResult",
+      "renderLogs",
+      "renderBridgeStatus",
+      "renderAssistantStatus",
+      "renderFileSummary",
+      "bindCommon",
+      "bindWorkLayer",
+      "bindSettingsLayer",
+      "ensureStyle",
+      "open"
+    ],
+    "exports": [
+      "openOfficeExcelTool",
+      "VeoOfficeExcelTool"
+    ]
+  },
+  {
+    "file": "selection-toolbar.js",
+    "lines": 135,
+    "functions": [
+      "configure",
+      "callHook",
+      "getSelectedCanvasElements",
+      "normalizeActions",
+      "resolveActions",
+      "ensureSelectionToolbar",
+      "buildContext",
+      "updateSelectionToolbar",
+      "requestSelectionToolbarUpdate"
+    ],
+    "exports": [
+      "VeoSelectionToolbar"
+    ]
+  },
+  {
+    "file": "social-media-tool.js",
+    "lines": 2201,
+    "functions": [
+      "escapeHtml",
+      "safeJsonParse",
+      "delay",
+      "createWorkspace",
+      "ensureWorkspaces",
+      "getWorkspace",
+      "getActiveWorkspace",
+      "saveActiveForm",
+      "restoreActiveForm",
+      "getWorkspaceStatus",
+      "getTemplateTypeLabel",
+      "normalizePromptTemplates",
+      "getPromptTemplates",
+      "getTemplateById",
+      "getDefaultTemplateId",
+      "clampImageCount",
+      "normalizeImageRatio",
+      "ensureWorkspaceImageRatios",
+      "getWorkspaceRatio",
+      "createTemplateId",
+      "fillTemplate",
+      "extractTheme",
+      "buildImagePlans",
+      "getSocialRatioConfig",
+      "resolveSocialImageSize",
+      "getAspectRatioStyle",
+      "normalizeHashtags",
+      "formatDateFolderName",
+      "sanitizeFilename",
+      "getImageFileExtension",
+      "writeFileToDirectory",
+      "buildExportCopyText",
+      "getPreviewHostname",
+      "getPreviewImage",
+      "buildDynamicPrompt",
+      "getImageRoute",
+      "shouldApplyMicroCrop",
+      "createDrawableImageSource",
+      "loadCanvasImage",
+      "microCropImageUrl",
+      "postProcessGeneratedImage",
+      "bindGeneratedImageDrag",
+      "ensureStyles",
+      "ensureShell",
+      "bindEvents",
+      "init",
+      "open",
+      "close",
+      "closeSettings",
+      "openImagePreview",
+      "closeImagePreview",
+      "addWorkspace",
+      "switchWorkspace",
+      "renderWorkspaceRail",
+      "renderActiveWorkspace",
+      "toggleSettings",
+      "openSettings",
+      "loadSettings",
+      "saveSettings",
+      "handleImageSelect",
+      "extractClipboardImageFiles",
+      "handleUploadPaste",
+      "processFiles",
+      "removeImage",
+      "renderGallery",
+      "renderTemplateOptions",
+      "renderTemplateSlots",
+      "renderTemplateManager",
+      "persistSettings",
+      "deletePromptTemplate",
+      "addPromptTemplate",
+      "handleGenerate",
+      "callTextMultimodalModel",
+      "generateImage",
+      "pollImageResult",
+      "parseImageResponse",
+      "extractFirstImageUrl",
+      "extractTaskId",
+      "extractStatus",
+      "isFailedStatus",
+      "renderTextOutput",
+      "renderGeneratedImage",
+      "renderImageResults",
+      "rerunImage",
+      "clearOutputs",
+      "setLoadingState",
+      "resetLog",
+      "clampProgress",
+      "getWorkspaceProgress",
+      "setWorkspaceProgress",
+      "renderLog",
+      "logDebug",
+      "fetchExportImageBlob",
+      "downloadExportBlob",
+      "fallbackDownloadWorkspaceExport",
+      "exportCurrentWorkspace",
+      "copyText",
+      "showToast"
+    ],
+    "exports": [
+      "resolveImgGenSize",
+      "handleAuthError",
+      "handleAuthError",
+      "extractImageUrlFromResponse",
+      "extractImageUrlsFromResponse",
+      "extractImgGenTaskId",
+      "extractImgGenStatus",
+      "isImgGenFailedStatus",
+      "openSocialMediaTool",
+      "closeSocialMediaTool",
+      "VeoSocialMediaTool"
+    ]
+  },
+  {
+    "file": "store.js",
+    "lines": 156,
+    "functions": [
+      "toBoolean"
+    ],
+    "exports": [
+      "sysBus",
+      "globalStore"
+    ]
+  },
+  {
+    "file": "task-actions.js",
+    "lines": 270,
+    "functions": [
+      "configure",
+      "callHook",
+      "toFiniteNumber",
+      "createDefaultImageGenTask",
+      "getDefaultViewportRect",
+      "createImageGenNode",
+      "normalizeTaskPosition",
+      "buildDuplicateTaskPayload",
+      "sanitizeImgGenCloneState",
+      "duplicateSelectedTasks",
+      "duplicateTask"
+    ],
+    "exports": [
+      "VeoTaskActions"
+    ]
+  },
+  {
+    "file": "task-cache.js",
+    "lines": 81,
+    "functions": [
+      "setTaskShadow",
+      "getTaskShadow",
+      "clearTaskShadow",
+      "scheduleImgGenPromptPersist",
+      "updateImgGenPromptDraft",
+      "clearImgGenPromptDraftTimer"
+    ],
+    "exports": [
+      "VeoTaskCache"
+    ]
+  },
+  {
+    "file": "task-lifecycle.js",
+    "lines": 98,
+    "functions": [
+      "configure",
+      "callHook",
+      "getSelectedTaskIds",
+      "confirmDeleteSelected",
+      "confirmRemoveTask",
+      "collectDirectChildIds",
+      "cleanupTaskRuntime",
+      "deleteTaskAndCard",
+      "refreshAfterDelete",
+      "deleteSelectedTasks",
+      "removeTask"
+    ],
+    "exports": [
+      "VeoTaskLifecycle"
+    ]
+  },
+  {
+    "file": "video-card-ui.js",
+    "lines": 40,
+    "functions": [
+      "renderVideoTaskCardHTML"
+    ],
+    "exports": []
+  },
+  {
+    "file": "video-console.js",
+    "lines": 380,
+    "functions": [
+      "configure",
+      "callHook",
+      "getStoreState",
+      "getInputModeLabel",
+      "getModelDisplayName",
+      "getQualityModel",
+      "getInputModeFromTask",
+      "toggleRefPopover",
+      "syncModeUI",
+      "toggleAdvanced",
+      "toggleMinimized",
+      "expand",
+      "setFrameImage",
+      "addReferenceImage",
+      "switchMode",
+      "updateInputMode",
+      "updateModel",
+      "updateRatio",
+      "updateEnhance",
+      "updateUpsample",
+      "updateAutoRetry",
+      "handleMultiRefs",
+      "removeReference",
+      "clearReferences",
+      "renderReferences",
+      "handleSingleFrame",
+      "clearFrame",
+      "reuseTask",
+      "bindBus"
+    ],
+    "exports": [
+      "VeoVideoConsole"
+    ]
+  },
+  {
+    "file": "video-models.js",
+    "lines": 99,
+    "functions": [
+      "getVideoInputModeLabel",
+      "getVideoQualityModel",
+      "getVideoInputModeFromTask",
+      "buildVideoSubmitModel",
+      "getVideoUnitCost",
+      "getVideoBillingInfo",
+      "getVideoModelDisplayName"
+    ],
+    "exports": [
+      "VeoVideoModels"
+    ]
+  },
+  {
+    "file": "video-tasks.js",
+    "lines": 358,
+    "functions": [
+      "isActive",
+      "removeActive",
+      "clearPolling",
+      "submitBatchTask",
+      "executeSubmission",
+      "retryTask",
+      "ensurePollingTask",
+      "startPolling"
+    ],
+    "exports": [
+      "VeoVideoTasks"
+    ]
+  },
+  {
+    "file": "viewport-culling.js",
+    "lines": 100,
+    "functions": [
+      "configure",
+      "callHook",
+      "finite",
+      "getFallbackSize",
+      "getCardWorldSize",
+      "syncCardViewportMetrics",
+      "updateViewportCulling",
+      "scheduleViewportCulling"
+    ],
+    "exports": [
+      "VeoViewportCulling"
+    ]
+  },
+  {
+    "file": "workspace-inputs.js",
+    "lines": 178,
+    "functions": [
+      "configure",
+      "callHook",
+      "isEditableTarget",
+      "createLocalImageTask",
+      "compressImage",
+      "saveLocalImage",
+      "ingestImageFiles",
+      "finishMaterialIngest",
+      "handleClipboardPaste",
+      "bindClipboardIngest",
+      "preventGlobalFileDrop",
+      "bindViewportDrop",
+      "resolveMetaImage",
+      "parseDroppedImage",
+      "bindMainConsoleDrop"
+    ],
+    "exports": [
+      "VeoWorkspaceInputs"
+    ]
+  },
+  {
+    "file": "workspace-io.js",
+    "lines": 157,
+    "functions": [
+      "configure",
+      "callHook",
+      "isRetiredTask",
+      "encodeBlobField",
+      "encodeBlobList",
+      "decodeBlobField",
+      "decodeBlobList",
+      "serializeTask",
+      "deserializeTask",
+      "downloadJsonFile",
+      "exportWorkspace",
+      "importParsedTasks",
+      "importWorkspace"
+    ],
+    "exports": [
+      "VeoWorkspaceIO"
+    ]
+  }
+]

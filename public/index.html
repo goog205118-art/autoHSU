@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>社媒内容工作台 · API 独立版</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+  <script src="js/api-client.js" defer></script>
+  <script src="js/social-media-tool.js" defer></script>
+  <script src="js/boot.js" defer></script>
+</head>
+<body>
+  <div class="demo-banner">演示模式 · 文案和图片均为模拟结果</div>
+  <section class="access-gate" id="access-gate" hidden>
+    <form id="access-form" class="access-card">
+      <span class="eyebrow">SOCIAL STUDIO</span>
+      <h1>进入社媒工作台</h1>
+      <p id="access-hint">输入工作台访问口令。</p>
+      <label for="access-code">访问口令</label>
+      <input id="access-code" type="password" autocomplete="current-password" required>
+      <button class="top-btn primary" type="submit">进入工作台</button>
+      <p id="access-error" role="alert"></p>
+    </form>
+  </section>
+  <main class="welcome">
+    <span class="eyebrow">SOCIAL STUDIO / API EDITION</span>
+    <h1>从商品图，到社媒内容。</h1>
+    <p>生成贴文和标签，搭配海报与场景模板，制作一组适合分享的产品配图。</p>
+    <button class="top-btn primary" id="open-workspace">打开社媒工作台</button>
+    <small>独立运行 · 直接接入 API</small>
+  </main>
+</body>
+</html>
