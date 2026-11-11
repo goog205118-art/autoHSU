@@ -1,4 +1,3 @@
-param([switch]$Demo)
 $ErrorActionPreference = 'Stop'
 Set-Location -LiteralPath $PSScriptRoot
 $nodeCommand = Get-Command node -ErrorAction SilentlyContinue
@@ -16,4 +15,4 @@ if ($nodeCommand) {
 }
 $majorVersion = [int]((& $runtime -p 'process.versions.node').Split('.')[0])
 if ($majorVersion -lt 22) { throw 'Node.js 22+ is required.' }
-if ($Demo) { & $runtime server.mjs --demo } else { & $runtime server.mjs }
+& $runtime scripts/serve.mjs

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Extracted Veo social media workspace with direct API adapters",
+  "description": "Static social media workspace with browser-owned GPT Image API connections",
   "engines": { "node": "22.x" },
-  "scripts": { "start": "node server.mjs", "demo": "node server.mjs --demo", "build": "node scripts/check.mjs", "test": "node --test tests/*.test.mjs" }
+  "scripts": { "start": "node scripts/serve.mjs", "build": "node scripts/check.mjs", "test": "node --test tests/direct-api.test.mjs" }
 }

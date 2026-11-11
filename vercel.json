@@ -3,12 +3,6 @@
   "framework": null,
   "buildCommand": "node scripts/check.mjs",
   "outputDirectory": "public",
-  "functions": {
-    "api/gateway.mjs": { "maxDuration": 300 }
-  },
-  "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/gateway?route=:path*" }
-  ],
   "headers": [
     { "source": "/(.*)", "headers": [
       { "key": "X-Content-Type-Options", "value": "nosniff" },

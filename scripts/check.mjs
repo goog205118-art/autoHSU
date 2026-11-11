@@ -13,5 +13,5 @@ function scan(directory) {
   }
 }
 scan(root);
-execFileSync(process.execPath, ['--test', 'tests/api.test.mjs'], { cwd: root, stdio: 'inherit' });
-console.log('Build checks passed. Static output: public/; API: api/gateway.mjs');
+execFileSync(process.execPath, ['--test', 'tests/direct-api.test.mjs'], { cwd: root, stdio: 'inherit' });
+console.log('Build checks passed. Static output: public/');

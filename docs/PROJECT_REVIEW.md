@@ -49,38 +49,22 @@
 | --- | --- |
 | 工作台顶栏按钮 | 独立 `public/index.html`，启动后直接进入社媒工作台 |
 | 主 CSS 变量、弹窗、按钮和字体图标 | 本地基础样式、原社媒专用样式、本地 Unicode 图标，无 CDN |
-| n8n 登录遮罩、会话密钥 | 服务端 `.env` 配置供应商密钥 |
-| `VeoApi` 的 `image.unified` 与 webhook 轮询 | `/api/images` 和服务端供应商适配器 |
+| n8n 登录遮罩、会话密钥 | 移除；页面直接填写自己的 API 连接 |
+| `VeoApi` 的 `image.unified` 与 webhook 轮询 | 浏览器直接调用 GPT Image `/images/edits` |
 | `VeoImageCore`、`VeoModelRegistry` 的渠道元数据 | 独立图片模型配置，移除原专有渠道参数 |
 | `VeoImageRequest` 的旧统一 payload | 各协议分别构建原生请求 |
-| `VeoMedia`、全局图片响应解析器 | 服务端参考图转换和结果归一化 |
+| `VeoMedia`、全局图片响应解析器 | 浏览器 FormData 原图上传与结果归一化 |
 | `VeoBilling.refreshBalanceAfterUsage()` | 提取后无账单模块依赖 |
-| 原浏览器保存的 API Key | 前端只保留风格与模板设置，密钥只在服务端 |
+| 原浏览器保存的 API Key | 在设置中填写，可选仅在当前浏览器记住 |
 
 独立版的运行代码没有 n8n、Wally webhook 或 `stable_channel_*` 默认路由，也不加载任何画布/视频/表格脚本。
 
-## 新的调用关系
+## 当前调用关系
 
-```text
-独立社媒界面
-  ├─ public/js/api-client.js
-  │    ├─ POST /api/text
-  │    └─ POST /api/images
-  └─ server.mjs
-       └─ server/providers.mjs
-            ├─ Gemini 原生协议
-            ├─ Compatible 兼容协议
-            └─ 自定义图片 JSON API + 可选异步轮询
-```
+独立社媒界面 → public/js/direct-api.js → 用户填写的 API 服务商。
 
-供应商差异集中在后端，后续接入自己的 API 时，保留前端契约即可。服务端是普通 HTTP 程序，不需要工作流编排服务。
+图片使用 /images/edits；文案使用 /responses 或 /chat/completions。连接方式参照 gptimagemt 的 859b6ca 版本，详细差异见 API.md。
 
-## 保留和调整
+保留商品参考图、英文文案默认风格、四个模板、多工作区、1–5 张配图、逐图比例、手动重试重绘、日志、模拟贴文预览和导出。微裁切默认关闭。
 
-保留原社媒的商品参考图、英文文案默认风格、四个模板、多工作区、1–5 张配图、逐图比例、重试重绘、日志、模拟贴文预览和导出。
-
-调整为服务端保存密钥；移除专用 n8n 通道；微裁切默认关闭；新增明确标记的演示模式；补充部分失败提示，避免有失败配图时仍只提示“生成完成”；在配置检查期间立即锁定生成按钮，避免快速重复点击提交。
-
-按线上部署要求，另增加 Vercel Serverless 入口、路由配置、访问口令、无状态会话与图片读取、参考图压缩及大图分块响应，保留本机启动方式。
-
-这次交付的是可运行独立模块和可替换调用层。具体供应商的真实鉴权、额度和图像效果，需要填入实际配置后联调。原项目默认模型名和渠道名没有被当作当前可用的 API 配置沿用。
+按当前需求改为纯静态网页：移除网站访问口令、环境变量、云函数和演示 API。不连接模型也可浏览完整页面；用户在网页内设置自己的 API，图片原始字节由浏览器直接发送。

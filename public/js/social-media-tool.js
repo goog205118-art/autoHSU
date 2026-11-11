@@ -771,7 +771,7 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
                         <div class="social-tool-settings-head">
                             <div>
                                 <h3><span class="material-symbols-outlined">tune</span> 社媒引擎设置</h3>
-                                <p class="social-tool-muted" style="margin:6px 0 0;">查看 API 连接状态，管理内容风格和配图模板。</p>
+                                <p class="social-tool-muted" style="margin:6px 0 0;">连接自己的 API，管理内容风格和配图模板。</p>
                             </div>
                             <button class="top-btn" id="social-tool-settings-back" type="button">
                                 <span class="material-symbols-outlined">arrow_back</span>
@@ -784,9 +784,66 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
                             </div>
                             <div class="social-tool-settings-grid">
                                 <div class="social-tool-field" style="grid-column:1/-1">
-                                    <label>API 连接状态</label>
-                                    <p class="social-tool-muted" id="social-tool-api-status">正在读取服务配置…</p>
-                                    <p class="social-tool-muted">线上在 Vercel 环境变量配置文本和图片服务，修改后重新部署。本地使用 .env。密钥仅保存在服务端。</p>
+                                    <label for="social-tool-api-base">API 地址</label>
+                                    <input class="social-tool-input" id="social-tool-api-base" type="url" placeholder="https://api.openlux.ai/v1" autocomplete="off">
+                                    <p class="social-tool-muted">与 GPT Image 工作室相同，填写服务商的 /v1 地址，图片由浏览器直接发送。</p>
+                                </div>
+                                <div class="social-tool-field" style="grid-column:1/-1">
+                                    <label for="social-tool-api-key">API Key</label>
+                                    <div class="social-connection-row">
+                                        <input class="social-tool-input" id="social-tool-api-key" type="password" autocomplete="off" placeholder="填写自己的 API Key" spellcheck="false">
+                                        <button class="top-btn" id="social-tool-show-key" type="button">显示</button>
+                                    </div>
+                                    <label class="social-tool-check-row" for="social-tool-remember-key"><input id="social-tool-remember-key" type="checkbox"><span>在当前浏览器记住 Key</span></label>
+                                    <p class="social-tool-muted">未勾选时 Key 仅用于当前页面，刷新后重新填写。勾选后保存在此浏览器的本地存储中。</p>
+                                </div>
+                                <div class="social-tool-field">
+                                    <label for="social-tool-image-model">图片模型</label>
+                                    <input class="social-tool-input" id="social-tool-image-model" list="social-tool-image-models" placeholder="gpt-image-2" autocomplete="off">
+                                    <datalist id="social-tool-image-models"><option value="gpt-image-2"><option value="gpt-image-2-c"><option value="gpt-image-2.5-flare"><option value="gpt-image-2.5-sunburst"><option value="gpt-image-1.5"><option value="gpt-image-1-mini"></datalist>
+                                    <p class="social-tool-muted">可直接填写包含路线后缀的模型 ID，以当前 Key 可用模型为准。</p>
+                                </div>
+                                <div class="social-tool-field">
+                                    <label for="social-tool-text-model">文案模型（须支持看图）</label>
+                                    <input class="social-tool-input" id="social-tool-text-model" list="social-tool-text-models" placeholder="gpt-6.1-sol" autocomplete="off">
+                                    <datalist id="social-tool-text-models"></datalist>
+                                </div>
+                                <div class="social-tool-field">
+                                    <label for="social-tool-image-quality">图片质量</label>
+                                    <select class="social-tool-select" id="social-tool-image-quality"><option value="low">快速预览</option><option value="medium">标准</option><option value="high">高质量</option><option value="xhigh">超高清（2.5）</option><option value="max">最高质量（2.5）</option><option value="auto">自动</option></select>
+                                </div>
+                                <div class="social-tool-field">
+                                    <label for="social-tool-image-format">图片格式</label>
+                                    <select class="social-tool-select" id="social-tool-image-format"><option value="png">PNG</option><option value="jpeg">JPEG</option><option value="webp">WebP</option></select>
+                                </div>
+                                <div class="social-tool-field">
+                                    <label for="social-tool-text-protocol">文案协议</label>
+                                    <select class="social-tool-select" id="social-tool-text-protocol"><option value="responses">Responses（与参考项目一致）</option><option value="chat">Chat Completions（兼容接口）</option></select>
+                                </div>
+                                <div class="social-tool-field">
+                                    <label for="social-tool-api-timeout">请求超时（秒）</label>
+                                    <input class="social-tool-input" id="social-tool-api-timeout" type="number" min="30" max="1800" step="1">
+                                </div>
+                                <div class="social-tool-field" style="grid-column:1/-1">
+                                    <label class="social-tool-check-row" for="social-tool-text-shared"><input id="social-tool-text-shared" type="checkbox"><span>文案复用图片 API 地址与 Key</span></label>
+                                    <div id="social-tool-text-connection" hidden>
+                                        <label for="social-tool-text-base">独立文案 API 地址</label>
+                                        <input class="social-tool-input" id="social-tool-text-base" type="url" autocomplete="off">
+                                        <label for="social-tool-text-key">独立文案 API Key</label>
+                                        <input class="social-tool-input" id="social-tool-text-key" type="password" autocomplete="off" spellcheck="false">
+                                    </div>
+                                </div>
+                                <div class="social-tool-field" style="grid-column:1/-1">
+                                    <details><summary>高级兼容设置</summary>
+                                        <label for="social-tool-format-field">图片格式参数</label>
+                                        <select class="social-tool-select" id="social-tool-format-field"><option value="auto">自动（沿用参考项目规则）</option><option value="format">format</option><option value="output_format">output_format</option></select>
+                                        <p class="social-tool-muted">仅在供应商明确提示不支持格式字段时修改。请求失败不会自动重新提交。</p>
+                                    </details>
+                                </div>
+                                <div class="social-tool-field" style="grid-column:1/-1">
+                                    <button class="top-btn" id="social-tool-fetch-models" type="button">读取可用模型</button>
+                                    <p class="social-tool-muted" id="social-tool-api-status" role="status">填写自己的 API 连接即可生成；不连接也可以浏览页面。</p>
+                                    <p class="social-tool-muted">读取列表仅查询模型，不会生图；若服务商不允许跨域读取列表，可手动填写模型。</p>
                                 </div>
                                 <div class="social-tool-field">
                                     <label for="social-tool-micro-crop">图片后处理</label>
@@ -897,6 +954,15 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
             closeSettings();
         });
         byId('social-tool-settings-save').addEventListener('click', saveSettings);
+        byId('social-tool-show-key').addEventListener('click', () => {
+            const field = byId('social-tool-api-key');
+            field.type = field.type === 'password' ? 'text' : 'password';
+            byId('social-tool-show-key').textContent = field.type === 'password' ? '显示' : '隐藏';
+        });
+        byId('social-tool-text-shared').addEventListener('change', () => {
+            byId('social-tool-text-connection').hidden = byId('social-tool-text-shared').checked;
+        });
+        byId('social-tool-fetch-models').addEventListener('click', fetchConnectionModels);
         byId('social-tool-generate-btn').addEventListener('click', handleGenerate);
         byId('social-tool-copy-btn').addEventListener('click', copyText);
         byId('social-tool-image-viewer-close').addEventListener('click', closeImagePreview);
@@ -970,11 +1036,7 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
         renderActiveWorkspace();
         bindEvents();
         initialized = true;
-        window.SocialApi.getConfig().then((config) => {
-            const status = byId('social-tool-api-status');
-            if (status) status.textContent = config.demo ? '演示模式：当前为模拟文案和示意图片，不调用模型。' : `文本：${config.text.provider} / ${config.text.model || "未配置"} · ${config.text.ready ? "已配置" : "待配置"}；图片：${config.image.provider} / ${config.image.model || "未配置"} · ${config.image.ready ? "已配置" : "待配置"}`;
-            if (config.demo) document.body.classList.add('demo-mode');
-        }).catch(() => { byId('social-tool-api-status').textContent = 'API 服务连接失败，请通过 node server.mjs 启动项目。'; });
+        renderConnectionStatus();
     }
 
     function open() {
@@ -1095,10 +1157,55 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
         });
         const microCrop = byId('social-tool-micro-crop');
         if (microCrop) microCrop.checked = settings.microCropEnabled !== false;
+        loadConnectionFields();
         renderTemplateManager();
     }
 
+    const connectionFields = {
+        base: 'social-tool-api-base', key: 'social-tool-api-key',
+        imageModel: 'social-tool-image-model', textModel: 'social-tool-text-model',
+        quality: 'social-tool-image-quality', format: 'social-tool-image-format',
+        textProtocol: 'social-tool-text-protocol', timeout: 'social-tool-api-timeout',
+        textBase: 'social-tool-text-base', textKey: 'social-tool-text-key', formatField: 'social-tool-format-field'
+    };
+    function loadConnectionFields() {
+        const connection = window.SocialApi.getConnection();
+        for (const [key, id] of Object.entries(connectionFields)) byId(id).value = connection[key];
+        byId('social-tool-remember-key').checked = connection.rememberKey;
+        byId('social-tool-text-shared').checked = connection.useImageConnection;
+        byId('social-tool-text-connection').hidden = connection.useImageConnection;
+        byId('social-tool-api-key').type = 'password';
+        byId('social-tool-show-key').textContent = '显示';
+        renderConnectionStatus();
+    }
+    function renderConnectionStatus() {
+        const c = window.SocialApi.getConnection();
+        const ready = Boolean(c.key && (c.useImageConnection || c.textKey));
+        byId('social-tool-api-status').textContent = ready ? `已填写连接 · 文案 ${c.textModel} · 图片 ${c.imageModel}（尚未验证供应商可用性）` : '填写自己的 API 连接即可生成；不连接也可以浏览页面。';
+    }
+    async function fetchConnectionModels() {
+        const button = byId('social-tool-fetch-models');
+        const base = byId('social-tool-api-base').value, key = byId('social-tool-api-key').value;
+        button.disabled = true;
+        byId('social-tool-api-status').textContent = '正在读取模型…';
+        try {
+            const models = await window.SocialApi.listModels({ base, key });
+            if (base !== byId('social-tool-api-base').value || key !== byId('social-tool-api-key').value) return;
+            const images = models.filter(id => /^(gpt-image-|chatgpt-image-latest)/.test(id));
+            byId('social-tool-image-models').replaceChildren(...images.map(id => new Option(id, id)));
+            byId('social-tool-text-models').replaceChildren(...models.filter(id => !images.includes(id)).map(id => new Option(id, id)));
+            byId('social-tool-api-status').textContent = `已读取 ${models.length} 个模型，其中 ${images.length} 个 GPT Image 模型；请按用途选择，读取列表不代表支持看图。`;
+        } catch (error) { byId('social-tool-api-status').textContent = error.message; }
+        finally { button.disabled = false; }
+    }
+
     function saveSettings() {
+        try {
+            const connection = Object.fromEntries(Object.entries(connectionFields).map(([key, id]) => [key, byId(id).value]));
+            connection.rememberKey = byId('social-tool-remember-key').checked;
+            connection.useImageConnection = byId('social-tool-text-shared').checked;
+            window.SocialApi.saveConnection(connection);
+        } catch (error) { showToast(error.message, true); return; }
         settings.microCropEnabled = byId('social-tool-micro-crop') ? byId('social-tool-micro-crop').checked : defaultSettings.microCropEnabled;
         settings.systemPrompt = byId('social-tool-system-prompt').value.trim() || defaultSettings.systemPrompt;
         settings.promptTemplates = normalizePromptTemplates(settings.promptTemplates);
