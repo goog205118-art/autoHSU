@@ -1,7 +1,7 @@
 import { createHandler } from '../server.mjs';
 import { readConfig } from '../server/config.mjs';
 
-const handler = createHandler(readConfig());
+const handler = createHandler(readConfig({ ...process.env, VERCEL: '1' }));
 export default async function gateway(request, response) {
   const url = new URL(request.url, 'https://localhost');
   const route = request.query?.route || url.searchParams.get('route');

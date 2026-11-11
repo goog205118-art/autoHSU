@@ -16,6 +16,19 @@ function json(response, status, data) {
 }
 async function readJson(request, maxBody = MAX_BODY) {
   if (!String(request.headers['content-type']).startsWith('application/json')) throw new ApiError('请使用 application/json', 415);
+  // Vercel can consume the incoming stream before calling a handler and expose
+  // the body through a lazy getter. Support that as well as plain Node streams.
+  if ('body' in request) {
+    let parsed;
+    try { parsed = request.body; }
+    catch { throw new ApiError('请求 JSON 格式无效', 400); }
+    if (parsed !== undefined) {
+      const serialized = typeof parsed === 'string' ? parsed : JSON.stringify(parsed);
+      if (Buffer.byteLength(serialized) > maxBody) throw new ApiError('上传内容过大，请压缩参考图', 413);
+      try { return typeof parsed === 'string' ? JSON.parse(parsed) : parsed; }
+      catch { throw new ApiError('请求 JSON 格式无效', 400); }
+    }
+  }
   let length = 0;
   const chunks = [];
   for await (const chunk of request) {
@@ -59,7 +72,7 @@ export function createHandler(config) {
         if (request.method === 'GET') return json(response, 200, { requiresAuth: security.requiresAuth, authenticated: security.isAuthenticated(request), configured: security.configured });
         if (request.method === 'POST') {
           const input = await readJson(request, 4096);
-          response.setHeader('Set-Cookie', security.login(input.code));
+          response.setHeader('Set-Cookie', security.login(input?.code));
           return json(response, 200, { authenticated: true });
         }
       }

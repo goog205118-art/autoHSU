@@ -197,12 +197,19 @@ test('large generated base64 images use a streamed response without truncating i
 
 test('Vercel gateway maps rewritten API paths and preserves demo image query parameters', async () => {
   const previous = { VERCEL: process.env.VERCEL, DEMO_MODE: process.env.DEMO_MODE, APP_ACCESS_CODE: process.env.APP_ACCESS_CODE };
-  process.env.VERCEL = '1'; process.env.DEMO_MODE = 'true'; process.env.APP_ACCESS_CODE = '';
+  delete process.env.VERCEL; process.env.DEMO_MODE = 'true'; process.env.APP_ACCESS_CODE = '';
   const { default: gateway } = await import('../api/gateway.mjs?smoke');
   for (const [key, value] of Object.entries(previous)) { if (value === undefined) delete process.env[key]; else process.env[key] = value; }
-  const server = http.createServer(gateway); const base = await serve(server);
+  const server = http.createServer(async (request, response) => {
+    if (request.method === 'POST') {
+      const parsed = JSON.parse(await read(request));
+      Object.defineProperty(request, 'body', { get: () => parsed });
+    }
+    return gateway(request, response);
+  }); const base = await serve(server);
   try {
     const cfg = await (await fetch(base + '/api/gateway?route=config')).json(); assert.equal(cfg.cloud, true); assert.equal(cfg.demo, true);
     const result = await fetch(base + '/api/gateway?route=demo-image&ratio=9%3A16'); assert.equal(result.status, 200); assert.match(await result.text(), /9:16/);
+    const text = await post(base, '/api/gateway?route=text'); assert.equal(text.status, 200); assert.match((await text.json()).content, /DEMO/);
   } finally { await close(server); }
 });
