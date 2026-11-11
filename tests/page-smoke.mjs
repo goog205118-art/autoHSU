@@ -46,7 +46,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1080 }, permissions: ['clipboard-read', 'clipboard-write'] });
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(base);
-  await page.locator('#social-tool-modal.show').waitFor();
+  await page.locator('#social-tool-workspace.show').waitFor();
   assert.equal(await page.locator('#access-gate').count(), 0);
   assert.equal(calls.length, 0);
   await page.locator('#social-tool-image-input').setInputFiles(Array.from({ length: 5 }, (_, i) => ({ name: `product-${i}.png`, mimeType: 'image/png', buffer: Buffer.from(pixel, 'base64') })));
@@ -65,6 +65,7 @@ try {
   assert.equal(await page.locator('#social-tool-api-key').getAttribute('type'), 'text');
   await page.locator('#social-tool-show-key').click();
   await page.locator('#social-tool-settings-save').click();
+  assert.equal(await page.locator('#studio-connection-status').textContent(), 'API 已配置');
   assert.doesNotMatch(await page.evaluate(() => JSON.stringify(localStorage)), /browser-test-key/);
   await page.locator('[data-social-ratio-slot]').nth(1).selectOption('4:5');
   await page.locator('[data-social-ratio-slot]').nth(2).selectOption('9:16');
@@ -79,9 +80,15 @@ try {
   assert.match(await page.locator('#social-tool-text-output').innerText(), /fresh product/);
   await page.locator('#social-tool-copy-btn').click();
   assert.match(await page.evaluate(() => navigator.clipboard.readText()), /#Brand/);
-  await page.locator('.social-tool-image-item.success img').first().dblclick();
+  await page.locator('.social-tool-image-item.success img').first().click();
   await page.locator('.social-tool-image-viewer.show').waitFor();
+  assert.equal(await page.locator('.social-tool-body').isVisible(), false);
+  assert.equal(await page.locator('.social-tool-image-viewer').evaluate(node => getComputedStyle(node).position), 'static');
+  await page.keyboard.press('Escape');
+  assert.equal(await page.locator('.social-tool-body').isVisible(), true);
+  await page.locator('.social-tool-image-item.success').first().press('Enter');
   await page.locator('#social-tool-image-viewer-close').click();
+  assert.equal(await page.locator('.social-tool-image-item.success').first().evaluate(node => document.activeElement === node), true);
   rejectImage = true;
   await page.locator('[data-social-rerun-mode="regenerate"]').first().click();
   await page.locator('.social-tool-image-item.failed').waitFor();

@@ -513,207 +513,48 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
         });
     }
 
-    function ensureStyles() {
-        if (byId('social-media-tool-styles')) return;
-        const style = document.createElement('style');
-        style.id = 'social-media-tool-styles';
-        style.textContent = `
-.social-tool-modal { z-index: 10050; }
-.social-tool-shell { width: min(1180px, calc(100vw - 36px)); max-height: min(860px, calc(100vh - 40px)); padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-.social-tool-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 26px; border-bottom: 1px solid var(--border); }
-.social-tool-title { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.social-tool-title h2 { margin: 0; font-size: 20px; }
-.social-tool-title p { color: var(--text-sub); font-size: 13px; margin: 0; }
-.social-tool-head-actions { display: flex; gap: 10px; align-items: center; }
-.social-tool-head-actions .help-close { position: static; inset: auto; transform: none; flex: 0 0 34px; width: 34px; height: 34px; }
-.social-tool-body { display: grid; grid-template-columns: 52px minmax(320px, 0.92fr) minmax(420px, 1.3fr); gap: 18px; padding: 18px; overflow: auto; }
-.social-tool-workspaces { display: flex; flex-direction: column; align-items: center; gap: 9px; position: sticky; top: 0; align-self: start; }
-.social-tool-workspace-list { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-.social-tool-workspace-btn, .social-tool-workspace-add { width: 38px; height: 38px; border-radius: 8px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); color: var(--text-sub); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; position: relative; }
-.social-tool-workspace-btn:hover, .social-tool-workspace-add:hover, .social-tool-workspace-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(94,156,255,0.12); }
-.social-tool-workspace-btn::after { content: ''; position: absolute; right: -2px; top: -2px; width: 9px; height: 9px; border-radius: 50%; background: transparent; border: 1px solid transparent; }
-.social-tool-workspace-btn.running::after { background: #f3b342; border-color: rgba(0,0,0,.18); }
-.social-tool-workspace-btn.failed::after { background: var(--danger); border-color: rgba(0,0,0,.18); }
-.social-tool-workspace-btn.done::after { background: #43c279; border-color: rgba(0,0,0,.18); }
-.social-tool-panel { background: rgba(255,255,255,0.045); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-:root[data-theme='light'] .social-tool-panel { background: rgba(246,249,255,0.78); }
-.social-tool-panel h3 { color: var(--text-main); font-size: 14px; font-weight: 650; margin: 0 0 12px; display: flex; align-items: center; gap: 7px; }
-.social-tool-field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
-.social-tool-field label { color: var(--text-sub); font-size: 12px; font-weight: 600; }
-.social-tool-input, .social-tool-textarea, .social-tool-select { width: 100%; border: 1px solid var(--border); border-radius: 8px; background: var(--input-muted-bg); color: var(--text-main); outline: none; font-size: 13px; padding: 10px 12px; user-select: text; }
-.social-tool-textarea { min-height: 88px; resize: vertical; line-height: 1.5; }
-.social-tool-check-row { min-height: 40px; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border); border-radius: 8px; padding: 9px 11px; background: var(--input-muted-bg); color: var(--text-main); font-size: 13px; cursor: pointer; }
-.social-tool-check-row input { width: 16px; height: 16px; accent-color: var(--accent); flex: 0 0 auto; }
-.social-tool-check-row span { min-width: 0; }
-.social-tool-inline-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.social-tool-template-slots { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; margin-bottom: 14px; }
-.social-tool-template-slot { display: grid; grid-template-columns: 42px minmax(150px, 1.1fr) minmax(150px, .9fr); gap: 8px; align-items: center; }
-.social-tool-template-slot span { color: var(--text-sub); font-size: 12px; font-weight: 650; }
-.social-tool-template-builder { border: 1px solid var(--border); border-radius: 8px; padding: 12px; background: rgba(255,255,255,.035); }
-.social-tool-template-builder textarea { min-height: 72px; }
-.social-tool-template-builder-actions { display: flex; justify-content: flex-end; margin-top: 10px; }
-.social-tool-preview-stage { min-height: 360px; padding: 0; background: transparent; border: 0; }
-.social-tool-preview-actions { display: flex; justify-content: flex-end; margin-bottom: 10px; }
-.social-tool-output { min-height: 320px; overflow: visible; white-space: normal; user-select: text; }
-.social-tool-social-preview { white-space: normal; color: #1f2937; }
-.social-tool-post-card { width: min(100%, 520px); margin: 0 auto; border: 1px solid rgba(15,23,42,.12); border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 10px 28px rgba(0,0,0,.16); }
-.social-tool-post-head { display: grid; grid-template-columns: 42px minmax(0, 1fr) 24px; gap: 10px; align-items: center; padding: 12px 14px; }
-.social-tool-post-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #2f80ed, #43c279); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; }
-.social-tool-post-title { min-width: 0; font-size: 13px; font-weight: 750; color: #111827; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.social-tool-post-meta { margin-top: 2px; color: #6b7280; font-size: 11px; display: flex; align-items: center; gap: 4px; }
-.social-tool-post-copy { padding: 0 14px 12px; color: #111827; font-size: 13px; line-height: 1.48; white-space: pre-wrap; }
-.social-tool-post-copy .social-tool-inline-tags { display: block; margin-top: 8px; color: #2563eb; }
-.social-tool-post-media { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #eef2f7; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 12px; overflow: hidden; }
-.social-tool-post-media-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: #64748b; background: linear-gradient(180deg, #f7f9fc, #edf2f7); text-align: center; }
-.social-tool-post-media-placeholder .material-symbols-outlined { font-size: 26px; opacity: .7; }
-.social-tool-post-media-placeholder.loading { position: relative; color: #475569; background: linear-gradient(110deg, #edf2f7 18%, #f8fbff 36%, #edf2f7 54%); background-size: 200% 100%; animation: socialToolPreviewSweep 1.4s linear infinite; }
-.social-tool-post-media-placeholder.loading::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,.34), transparent); transform: translateX(-100%); animation: socialToolShimmer 1.4s linear infinite; }
-.social-tool-post-media-placeholder.loading > * { position: relative; z-index: 1; }
-.social-tool-post-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.social-tool-post-link { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 14px; background: #f3f4f6; border-top: 1px solid rgba(15,23,42,.08); }
-.social-tool-post-link-domain { color: #6b7280; font-size: 10px; text-transform: uppercase; letter-spacing: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.social-tool-post-link-title { margin-top: 2px; color: #111827; font-size: 12px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.social-tool-post-cta { border: 0; border-radius: 6px; padding: 7px 10px; background: #e5e7eb; color: #111827; font-size: 12px; font-weight: 700; }
-.social-tool-post-engage { display: flex; justify-content: space-around; gap: 8px; padding: 10px 12px; color: #4b5563; font-size: 12px; border-top: 1px solid rgba(15,23,42,.08); }
-.social-tool-post-engage span { display: inline-flex; align-items: center; gap: 5px; }
-.social-tool-post-engage .material-symbols-outlined { font-size: 16px; }
-.social-tool-muted { color: var(--text-sub); font-size: 12px; line-height: 1.5; }
-.social-tool-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.social-tool-upload { aspect-ratio: 1; border: 1px dashed var(--border); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--text-sub); cursor: pointer; background: rgba(255,255,255,0.04); outline: none; text-align: center; }
-.social-tool-upload small { font-size: 11px; color: currentColor; opacity: .76; }
-.social-tool-upload:hover, .social-tool-upload:focus-visible, .social-tool-upload.is-drag, .social-tool-upload.is-paste-target { color: var(--accent); border-color: var(--accent); background: rgba(94,156,255,0.1); }
-.social-tool-upload input { display: none; }
-.social-tool-preview { position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.05); }
-.social-tool-preview img, .social-tool-image-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.social-tool-remove { position: absolute; top: 6px; right: 6px; border: 0; width: 24px; height: 24px; border-radius: 50%; background: rgba(0,0,0,0.62); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.social-tool-remove:hover { background: var(--danger); }
-.social-tool-main-btn { width: 100%; justify-content: center; padding: 12px 14px; }
-.social-tool-main-btn[disabled] { opacity: .62; cursor: not-allowed; transform: none; }
-.social-tool-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; }
-.social-tool-image-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; min-height: 156px; position: relative; }
-.social-tool-image-item { aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: rgba(255,255,255,0.05); position: relative; }
-.social-tool-image-item.success { cursor: zoom-in; min-height: 120px; }
-.social-tool-image-item a { position: absolute; right: 7px; bottom: 7px; border-radius: 8px; background: rgba(0,0,0,.62); color: #fff; padding: 5px 7px; font-size: 11px; text-decoration: none; }
-.social-tool-image-badge { position: absolute; left: 7px; top: 7px; max-width: calc(100% - 14px); border-radius: 8px; background: rgba(0,0,0,.62); color: #fff; padding: 5px 7px; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.social-tool-image-actions { position: absolute; right: 7px; bottom: 7px; display: flex; align-items: center; gap: 6px; }
-.social-tool-image-actions a { position: static; }
-.social-tool-image-item.pending, .social-tool-image-item.failed { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 12px; text-align: center; color: var(--text-sub); }
-.social-tool-image-item.pending { border-style: dashed; position: relative; background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); }
-.social-tool-image-item.failed { border-color: rgba(255,94,89,.42); color: var(--danger); }
-.social-tool-image-item .material-symbols-outlined { font-size: 24px; }
-.social-tool-image-loader { width: 100%; height: 100%; min-height: 118px; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 9px; align-items: stretch; color: var(--text-sub); position: relative; z-index: 1; }
-.social-tool-image-item.pending::before { content: ''; position: absolute; inset: -1px; border-radius: inherit; background: linear-gradient(135deg, rgba(94,156,255,.08), rgba(67,194,121,.08)); opacity: .65; }
-.social-tool-image-item.pending::after { content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,.12) 38%, transparent 56%); background-size: 200% 100%; animation: socialToolPendingSweep 1.35s linear infinite; opacity: .8; }
-.social-tool-image-pending-icon { display: inline-flex; font-size: 26px !important; animation: socialToolSpin .95s linear infinite; color: var(--accent); vertical-align: middle; }
-.social-tool-loader-shimmer { position: relative; overflow: hidden; border-radius: 7px; background: linear-gradient(110deg, rgba(255,255,255,.05), rgba(255,255,255,.14), rgba(255,255,255,.05)); }
-.social-tool-loader-shimmer::after { content: ''; position: absolute; inset: 0; transform: translateX(-100%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent); animation: socialToolShimmer 1.25s linear infinite; }
-.social-tool-loader-copy { font-size: 11px; line-height: 1.35; }
-.social-tool-loader-copy strong { display: block; color: var(--text-main); font-size: 12px; margin-bottom: 2px; }
-@keyframes socialToolShimmer { to { transform: translateX(100%); } }
-@keyframes socialToolPendingSweep { to { background-position: 200% 0; } }
-@keyframes socialToolPreviewSweep { to { background-position: 200% 0; } }
-@keyframes socialToolSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.social-tool-image-retry { border: 1px solid rgba(255,94,89,.38); color: var(--danger); background: rgba(255,94,89,.08); border-radius: 8px; padding: 6px 9px; cursor: pointer; font-size: 12px; }
-.social-tool-image-regenerate { border: 1px solid rgba(94,156,255,.35); color: #d7e7ff; background: rgba(20,55,98,.8); border-radius: 8px; padding: 5px 7px; cursor: pointer; font-size: 11px; display: inline-flex; align-items: center; gap: 4px; }
-.social-tool-image-regenerate:hover { border-color: var(--accent); background: rgba(36,83,141,.9); }
-.social-tool-placeholder { min-height: 120px; display: flex; align-items: center; justify-content: center; color: var(--text-sub); font-size: 13px; text-align: center; grid-column: 1 / -1; border: 1px dashed var(--border); border-radius: 8px; padding: 12px; }
-.social-tool-tags { display: flex; flex-wrap: wrap; gap: 8px; min-height: 28px; }
-.social-tool-tag { color: var(--accent); background: rgba(94,156,255,0.11); border: 1px solid rgba(94,156,255,0.2); border-radius: 999px; padding: 5px 9px; font-size: 12px; user-select: text; }
-.social-tool-log { min-height: 110px; max-height: 170px; overflow: auto; font-family: Consolas, Monaco, monospace; font-size: 11px; color: var(--text-sub); user-select: text; }
-.social-tool-progress { position: sticky; top: 0; z-index: 1; padding: 0 0 9px; margin-bottom: 8px; background: inherit; }
-.social-tool-progress-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; color: var(--text-main); font-family: inherit; font-size: 11px; }
-.social-tool-progress-track { height: 7px; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.08); }
-.social-tool-progress-fill { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #43c279, #5e9cff); transition: width .24s ease; }
-.social-tool-shell.settings-open .social-tool-body { display: none; }
-.social-tool-settings { display: none; flex: 1; min-height: 0; overflow: auto; border-top: 1px solid var(--border); padding: 20px; background: rgba(0,0,0,0.12); }
-.social-tool-settings.show { display: block; }
-.social-tool-settings-page { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
-.social-tool-settings-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
-.social-tool-settings-head h3 { margin: 0; font-size: 17px; color: var(--text-main); display: flex; align-items: center; gap: 8px; }
-.social-tool-settings-section { border: 1px solid var(--border); border-radius: 10px; padding: 16px; background: rgba(255,255,255,.035); }
-.social-tool-settings-section-title { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
-.social-tool-settings-section-title h4 { margin: 0; color: var(--text-main); font-size: 14px; display: flex; align-items: center; gap: 7px; }
-.social-tool-settings-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.social-tool-risk-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.social-tool-risk-field { border: 1px solid rgba(255,183,77,.28); border-radius: 8px; padding: 12px; background: rgba(255,183,77,.06); }
-.social-tool-risk-field label { color: #ffb74d; }
-.social-tool-risk-textarea { min-height: 150px; font-family: Consolas, Monaco, monospace; font-size: 11px; background: rgba(0,0,0,.18); }
-.social-tool-risk-textarea[readonly] { cursor: text; opacity: .92; }
-.social-tool-template-manager { display: grid; grid-template-columns: minmax(300px, .92fr) minmax(360px, 1.08fr); gap: 14px; align-items: start; }
-.social-tool-template-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; max-height: 440px; overflow: auto; padding-right: 4px; }
-.social-tool-template-card { border: 1px solid var(--border); border-radius: 8px; padding: 12px; background: rgba(255,255,255,.04); }
-.social-tool-template-card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
-.social-tool-template-card-title { min-width: 0; display: flex; align-items: center; gap: 8px; color: var(--text-main); font-size: 13px; font-weight: 650; }
-.social-tool-template-pill { flex: 0 0 auto; border-radius: 999px; color: var(--accent); background: rgba(94,156,255,.11); border: 1px solid rgba(94,156,255,.2); padding: 3px 7px; font-size: 11px; }
-.social-tool-template-card-body { color: var(--text-sub); font-size: 11px; line-height: 1.45; max-height: 74px; overflow: auto; user-select: text; white-space: pre-wrap; }
-.social-tool-template-delete { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 8px; border: 1px solid rgba(255,94,89,.3); color: var(--danger); background: rgba(255,94,89,.07); cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.social-tool-template-delete[disabled] { opacity: .45; cursor: not-allowed; }
-.social-tool-settings-actions { display: flex; justify-content: flex-end; gap: 10px; position: sticky; bottom: -20px; padding: 14px 0 0; background: linear-gradient(to bottom, transparent, rgba(0,0,0,.2) 35%, rgba(0,0,0,.2)); }
-.social-tool-image-viewer { position: fixed; inset: 0; z-index: 10090; display: none; align-items: center; justify-content: center; padding: 28px; background: rgba(0,0,0,.78); }
-.social-tool-image-viewer.show { display: flex; }
-.social-tool-image-viewer-inner { position: relative; width: min(96vw, 1120px); height: min(92vh, 880px); display: flex; align-items: center; justify-content: center; }
-.social-tool-image-viewer img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; box-shadow: 0 18px 56px rgba(0,0,0,.42); background: rgba(255,255,255,.04); }
-.social-tool-image-viewer-close { position: absolute; top: 10px; right: 10px; width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.28); border-radius: 8px; background: rgba(0,0,0,.58); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.social-tool-image-viewer-open { position: absolute; right: 10px; bottom: 10px; border: 1px solid rgba(255,255,255,.28); border-radius: 8px; background: rgba(0,0,0,.58); color: #fff; padding: 8px 10px; font-size: 12px; text-decoration: none; }
-.social-tool-toast { position: fixed; left: 50%; bottom: 34px; transform: translateX(-50%) translateY(14px); opacity: 0; pointer-events: none; z-index: 10080; border: 1px solid var(--border); background: var(--chrome-bg-strong); color: var(--text-main); border-radius: 8px; padding: 10px 14px; font-size: 13px; box-shadow: var(--panel-shadow); transition: opacity .2s ease, transform .2s ease; }
-.social-tool-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.social-tool-toast.error { border-color: rgba(255,94,89,.35); color: var(--danger); }
-@media (max-width: 860px) {
-  .social-tool-body { grid-template-columns: 48px minmax(0, 1fr); }
-  .social-tool-body > .social-tool-grid { grid-column: 2; }
-  .social-tool-inline-grid { grid-template-columns: 1fr; }
-  .social-tool-settings-grid, .social-tool-risk-grid { grid-template-columns: 1fr; }
-  .social-tool-template-manager { grid-template-columns: 1fr; }
-  .social-tool-gallery, .social-tool-image-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .social-tool-head { align-items: flex-start; }
-}
-`;
-        document.head.appendChild(style);
-    }
-
     function ensureShell() {
-        if (byId('social-tool-modal')) return;
-        const modal = document.createElement('div');
-        modal.id = 'social-tool-modal';
-        modal.className = 'help-modal social-tool-modal';
+        if (byId('social-tool-workspace')) return;
+        const modal = document.createElement('main');
+        modal.id = 'social-tool-workspace';
+        modal.className = 'social-tool-workspace';
+        modal.setAttribute('aria-label', '社媒内容工作台');
         modal.innerHTML = `
-            <div class="help-content social-tool-shell" onclick="event.stopPropagation()">
+            <div class="social-tool-shell">
                 <div class="social-tool-head">
                     <div class="social-tool-title">
-                        <h2><span class="material-symbols-outlined">campaign</span> 社媒内容工作台</h2>
-                        <p>上传产品图，生成欧美社媒贴文，并用模板批量生成配图。</p>
+                        <h1><span class="studio-mark" aria-hidden="true">S</span> 社媒工作室<span class="studio-subtitle">内容工作台</span></h1>
+                        <p>让产品有故事，让灵感成作品。</p>
                     </div>
-                    <div class="social-tool-head-actions">
+                    <div class="social-tool-head-actions"><span class="connection-status" id="studio-connection-status" role="status">未连接 API</span>
                         <button class="top-btn" id="social-tool-export-btn" type="button" title="导出当前社媒内容" aria-label="导出当前社媒内容">
                             <span class="material-symbols-outlined">drive_folder_upload</span><span>导出</span>
                         </button>
-                        <button class="top-btn" id="social-tool-settings-btn" title="社媒引擎设置" aria-label="社媒引擎设置">
+                        <button class="top-btn" id="social-tool-settings-btn" type="button" title="API 与模板设置" aria-label="API 与模板设置" aria-expanded="false" aria-controls="social-tool-settings">
                             <span class="material-symbols-outlined">tune</span><span>设置</span>
-                        </button>
-                        <button class="help-close" id="social-tool-close-btn" type="button" title="返回欢迎页">
-                            <span class="material-symbols-outlined">close</span>
                         </button>
                     </div>
                 </div>
-                <div class="social-tool-body">
-                    <aside class="social-tool-workspaces" aria-label="Social media workspaces">
+                <nav class="social-tool-workspaces" aria-label="工作区"><span class="workspace-label">工作区</span>
                         <div class="social-tool-workspace-list" id="social-tool-workspace-list"></div>
                         <button class="social-tool-workspace-add" id="social-tool-workspace-add" type="button" title="新增工作区">
                             <span class="material-symbols-outlined" style="font-size:19px;">add</span>
                         </button>
-                    </aside>
-                    <section class="social-tool-grid">
+                    <span class="workspace-note">刷新会清空作品，请及时导出</span></nav>
+                <div class="social-tool-body">
+                    <section class="social-tool-grid studio-compose" aria-label="创作设置">
+                        <div class="column-heading"><div><h2>开始创作</h2><p>准备素材，定义这一次的表达。</p></div><span class="material-symbols-outlined">edit_note</span></div>
                         <div class="social-tool-panel">
                             <h3><span class="material-symbols-outlined">image</span> 产品图片</h3>
                             <div class="social-tool-gallery" id="social-tool-gallery">
                                 <label class="social-tool-upload" id="social-tool-upload" tabindex="0" title="点击上传、拖入图片，或鼠标悬停后 Ctrl+V 粘贴剪切板图片">
                                     <span class="material-symbols-outlined">add_photo_alternate</span>
-                                    <span>添加图片</span>
-                                    <small>支持 Ctrl+V 粘贴</small>
+                                    <span>上传产品图片</span>
+                                    <small>点击、拖入或粘贴图片</small>
                                     <input id="social-tool-image-input" type="file" accept="image/png,image/jpeg,image/webp" multiple>
                                 </label>
                             </div>
-                            <p class="social-tool-muted" style="margin-top:10px;">最多上传 5 张，图片会同时提供给文本分析和 API 生图参考。</p>
+                            <p class="social-tool-muted" style="margin-top:10px;">最多 5 张 · PNG、JPG、WebP。用于识别产品和生成配图。</p>
                         </div>
                         <div class="social-tool-panel">
                             <h3><span class="material-symbols-outlined">edit_note</span> 内容需求</h3>
@@ -744,24 +585,23 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
                                 <span id="social-tool-generate-text">生成文案 & 模板配图</span>
                             </button>
                         </div>
-                        <div class="social-tool-panel social-tool-log" id="social-tool-log">
-                            <div>运行日志</div>
-                        </div>
+                        <details class="studio-activity"><summary>生成进度与记录</summary><div class="social-tool-log" id="social-tool-log" role="log" aria-label="生成记录"></div></details>
                     </section>
-                    <section class="social-tool-grid">
+                    <section class="social-tool-grid studio-results" aria-label="创作结果">
+                        <div class="column-heading"><div><h2>内容预览</h2><p>文案与配图，在这里成为完整的贴文。</p></div><span class="preview-label">贴文预览</span></div>
                         <div class="social-tool-preview-stage">
-                            <div class="social-tool-preview-actions">
+                            <div class="social-tool-preview-actions"><h3>社媒贴文</h3>
                                 <button class="top-btn" id="social-tool-copy-btn" type="button">
                                     <span class="material-symbols-outlined">content_copy</span>
-                                    复制文案+标签
+                                    复制文案
                                 </button>
                             </div>
                             <div class="social-tool-output" id="social-tool-text-output">等待生成中...</div>
                         </div>
                         <div class="social-tool-panel">
-                            <h3><span class="material-symbols-outlined">palette</span> 生成的配图</h3>
+                            <h3><span class="material-symbols-outlined">palette</span> 配图作品</h3>
                             <div class="social-tool-image-grid" id="social-tool-images">
-                                <div class="social-tool-placeholder">暂无生成的图片</div>
+                                <div class="social-tool-placeholder"><span class="material-symbols-outlined">photo_library</span><strong>一组作品，从一个想法开始</strong><span>选择每张图的模板与比例，生成后可独立重试、预览和导出。</span></div>
                             </div>
                         </div>
                     </section>
@@ -920,32 +760,31 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
                 </div>
             </div>
         `;
-        modal.addEventListener('click', close);
         document.body.appendChild(modal);
 
         const toast = document.createElement('div');
         toast.id = 'social-tool-toast';
         toast.className = 'social-tool-toast';
+        toast.setAttribute('role', 'status');
         document.body.appendChild(toast);
 
-        const viewer = document.createElement('div');
+        const viewer = document.createElement('section');
         viewer.id = 'social-tool-image-viewer';
         viewer.className = 'social-tool-image-viewer';
+        viewer.setAttribute('aria-label', '配图详情');
         viewer.innerHTML = `
-            <div class="social-tool-image-viewer-inner" onclick="event.stopPropagation()">
-                <button class="social-tool-image-viewer-close" id="social-tool-image-viewer-close" type="button" title="关闭预览">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
+            <div class="social-tool-image-viewer-inner"><div class="image-detail-head"><h2>配图详情</h2>
+                <button class="social-tool-image-viewer-close" id="social-tool-image-viewer-close" type="button" title="返回工作台">
+                    <span class="material-symbols-outlined">arrow_back</span> 返回工作台
+                </button></div>
                 <img id="social-tool-image-viewer-img" alt="生成配图预览">
                 <a class="social-tool-image-viewer-open" id="social-tool-image-viewer-open" target="_blank" rel="noopener noreferrer">新窗口打开</a>
             </div>
         `;
-        viewer.addEventListener('click', closeImagePreview);
-        document.body.appendChild(viewer);
+        modal.querySelector('.social-tool-shell').appendChild(viewer);
     }
 
     function bindEvents() {
-        byId('social-tool-close-btn').addEventListener('click', close);
         byId('social-tool-export-btn').addEventListener('click', exportCurrentWorkspace);
         byId('social-tool-settings-btn').addEventListener('click', toggleSettings);
         byId('social-tool-settings-back').addEventListener('click', closeSettings);
@@ -1006,6 +845,12 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
                 upload.contains(active)
             ));
         };
+        upload.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                byId('social-tool-image-input').click();
+            }
+        });
         upload.addEventListener('mouseenter', () => upload.classList.add('is-paste-target'));
         upload.addEventListener('mouseleave', () => upload.classList.remove('is-paste-target'));
         upload.addEventListener('focus', () => upload.classList.add('is-paste-target'));
@@ -1029,7 +874,6 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
 
     function init() {
         if (initialized) return;
-        ensureStyles();
         ensureShell();
         loadSettings();
         ensureWorkspaces();
@@ -1041,21 +885,26 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
 
     function open() {
         init();
-        byId('social-tool-modal').classList.add('show');
+        byId('social-tool-workspace').classList.add('show');
     }
 
     function close() {
-        const modal = byId('social-tool-modal');
-        if (modal) modal.classList.remove('show');
         closeSettings();
         closeImagePreview();
     }
+
+    let workspaceScroll = 0;
+    let previewReturnFocus = null;
+    let previewScroll = 0;
 
     function closeSettings() {
         const settingsPanel = byId('social-tool-settings');
         const shell = document.querySelector('.social-tool-shell');
         if (settingsPanel) settingsPanel.classList.remove('show');
         if (shell) shell.classList.remove('settings-open');
+        byId('social-tool-settings-btn')?.setAttribute('aria-expanded', 'false');
+        window.scrollTo(0, workspaceScroll);
+        byId('social-tool-settings-btn')?.focus({ preventScroll: true });
     }
 
     function openImagePreview(url) {
@@ -1064,16 +913,24 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
         const img = byId('social-tool-image-viewer-img');
         const link = byId('social-tool-image-viewer-open');
         if (!viewer || !img || !link) return;
+        previewReturnFocus = document.activeElement;
+        previewScroll = window.scrollY;
         img.src = url;
         link.href = url;
         viewer.classList.add('show');
+        document.querySelector('.social-tool-shell').classList.add('preview-open');
+        window.scrollTo(0, 0);
+        byId('social-tool-image-viewer-close').focus({ preventScroll: true });
     }
 
     function closeImagePreview() {
         const viewer = byId('social-tool-image-viewer');
         const img = byId('social-tool-image-viewer-img');
-        if (!viewer) return;
+        if (!viewer || !viewer.classList.contains('show')) return;
         viewer.classList.remove('show');
+        document.querySelector('.social-tool-shell').classList.remove('preview-open');
+        window.scrollTo(0, previewScroll);
+        previewReturnFocus?.focus({ preventScroll: true });
         if (img) img.removeAttribute('src');
     }
 
@@ -1103,7 +960,9 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
             button.className = `social-tool-workspace-btn ${workspace.id === activeWorkspaceId ? 'active' : ''} ${getWorkspaceStatus(workspace)}`;
             button.dataset.workspaceId = workspace.id;
             button.title = `${workspace.name || `W${index + 1}`} - ${getWorkspaceStatus(workspace)}`;
-            button.textContent = String(index + 1);
+            button.textContent = `创作 ${String(index + 1).padStart(2, '0')}`;
+            button.setAttribute('aria-current', workspace.id === activeWorkspaceId ? 'true' : 'false');
+            button.setAttribute('aria-label', `工作区 ${index + 1}，${getWorkspaceStatus(workspace)}`);
             list.appendChild(button);
         });
     }
@@ -1120,23 +979,23 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
     }
 
     function toggleSettings() {
-        loadSettings();
-        const settingsPanel = byId('social-tool-settings');
-        const shell = document.querySelector('.social-tool-shell');
-        const shouldOpen = settingsPanel && !settingsPanel.classList.contains('show');
-        if (!settingsPanel) return;
-        settingsPanel.classList.toggle('show', shouldOpen);
-        if (shell) shell.classList.toggle('settings-open', shouldOpen);
-        if (shouldOpen) renderTemplateManager();
+        if (byId('social-tool-settings').classList.contains('show')) closeSettings();
+        else openSettings();
     }
 
     function openSettings() {
+        workspaceScroll = window.scrollY;
+        saveActiveForm();
+        closeImagePreview();
         loadSettings();
         const settingsPanel = byId('social-tool-settings');
         const shell = document.querySelector('.social-tool-shell');
         if (settingsPanel) settingsPanel.classList.add('show');
         if (shell) shell.classList.add('settings-open');
         renderTemplateManager();
+        byId('social-tool-settings-btn').setAttribute('aria-expanded', 'true');
+        window.scrollTo(0, 0);
+        byId('social-tool-settings-back').focus({ preventScroll: true });
     }
 
     function loadSettings() {
@@ -1181,6 +1040,11 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
     function renderConnectionStatus() {
         const c = window.SocialApi.getConnection();
         const ready = Boolean(c.key && (c.useImageConnection || c.textKey));
+        const badge = byId('studio-connection-status');
+        if (badge) {
+            badge.textContent = ready ? 'API 已配置' : '未连接 API';
+            badge.classList.toggle('ready', Boolean(ready));
+        }
         byId('social-tool-api-status').textContent = ready ? `已填写连接 · 文案 ${c.textModel} · 图片 ${c.imageModel}（尚未验证供应商可用性）` : '填写自己的 API 连接即可生成；不连接也可以浏览页面。';
     }
     async function fetchConnectionModels() {
@@ -1212,6 +1076,7 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
         try {
             window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
         } catch (err) {}
+        renderConnectionStatus();
         closeSettings();
         showToast('设置已应用');
     }
@@ -1297,6 +1162,7 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
             const remove = document.createElement('button');
             remove.className = 'social-tool-remove';
             remove.type = 'button';
+            remove.setAttribute('aria-label', `移除参考图 ${index + 1}`);
             remove.innerHTML = '<span class="material-symbols-outlined" style="font-size:16px;">close</span>';
             remove.addEventListener('click', () => removeImage(index));
             item.append(image, remove);
@@ -1332,10 +1198,10 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
             return `
                 <div class="social-tool-template-slot">
                     <span>图 ${index + 1}</span>
-                    <select class="social-tool-select" data-social-template-slot="${index}">
+                    <select class="social-tool-select" aria-label="图 ${index + 1} 提示词模板" data-social-template-slot="${index}">
                         ${renderTemplateOptions(selectedId)}
                     </select>
-                    <select class="social-tool-select" data-social-ratio-slot="${index}">
+                    <select class="social-tool-select" aria-label="图 ${index + 1} 配图比例" data-social-ratio-slot="${index}">
                         ${SOCIAL_IMAGE_RATIOS.map((item) => `<option value="${escapeHtml(item.value)}" ${item.value === selectedRatio ? 'selected' : ''}>${escapeHtml(item.label)}</option>`).join('')}
                     </select>
                 </div>
@@ -1564,16 +1430,16 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
                         <div class="social-tool-post-head">
                             <div class="social-tool-post-avatar">S</div>
                             <div>
-                                <div class="social-tool-post-title">Social Campaign Preview</div>
-                                <div class="social-tool-post-meta">Sponsored · Preview</div>
+                                <div class="social-tool-post-title">你的产品故事</div>
+                                <div class="social-tool-post-meta">文案、标签与产品配图</div>
                             </div>
                             <span class="material-symbols-outlined" style="font-size:18px; color:#6b7280;">more_horiz</span>
                         </div>
-                        <div class="social-tool-post-copy">等待生成社媒文案...</div>
+                        <div class="social-tool-post-copy">添加产品图片与内容需求，开始这一次创作。</div>
                         <div class="social-tool-post-media">
                             <div class="social-tool-post-media-placeholder ${workspace.isLoading ? 'loading' : ''}">
                                 <span class="material-symbols-outlined">${workspace.isLoading ? 'hourglass_top' : 'image'}</span>
-                                <span>${workspace.isLoading ? '图片生成中...' : '图片生成后会显示在这里'}</span>
+                                <span>${workspace.isLoading ? '图片生成中...' : '为你的产品，留一个好位置'}</span>
                             </div>
                         </div>
                         <div class="social-tool-post-engage">
@@ -1650,7 +1516,9 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
         item.className = 'social-tool-image-item';
         item.classList.add('success');
         item.style.aspectRatio = DEFAULT_IMAGE_RATIO.replace(':', ' / ');
-        item.addEventListener('dblclick', () => openImagePreview(url));
+        item.addEventListener('click', (event) => {
+            if (!event.target.closest('a, button')) openImagePreview(url);
+        });
         const img = document.createElement('img');
         img.src = url;
         img.alt = `生成配图 ${index + 1}`;
@@ -1670,7 +1538,7 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
         if (!grid) return;
         const results = workspace && Array.isArray(workspace.imageResults) ? workspace.imageResults : [];
         if (results.length === 0) {
-            grid.innerHTML = '<div class="social-tool-placeholder">暂无生成的图片</div>';
+            grid.innerHTML = '<div class="social-tool-placeholder"><span class="material-symbols-outlined">photo_library</span><strong>一组作品，从一个想法开始</strong><span>选择每张图的模板与比例，生成后可独立重试、预览和导出。</span></div>';
             return;
         }
         grid.innerHTML = '';
@@ -1705,14 +1573,20 @@ Do NOT generate image prompts. The frontend will combine 'theme' with user-selec
                 actions.className = 'social-tool-image-actions';
                 actions.append(regenerate, link);
                 item.append(img, badge, actions);
-                item.title = '双击放大查看';
+                item.title = '点击查看配图详情';
+                item.setAttribute('aria-label', `预览配图 ${index + 1}，${result.templateName || ''}`);
                 item.tabIndex = 0;
-                item.addEventListener('dblclick', (event) => {
+                item.addEventListener('click', (event) => {
                     if (event.target && typeof event.target.closest === 'function' && event.target.closest('a, button')) return;
+                    item.focus({ preventScroll: true });
                     openImagePreview(result.url);
                 });
                 item.addEventListener('keydown', (event) => {
-                    if (event.key === 'Enter') openImagePreview(result.url);
+                    if (event.target !== item) return;
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openImagePreview(result.url);
+                    }
                 });
             } else if (status === 'failed') {
                 item.innerHTML = `

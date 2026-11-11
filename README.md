@@ -2,6 +2,8 @@
 
 从 veo-pal 的社媒功能提取，保留商品参考图、文案标签、多工作区、海报/场景模板、逐图比例、生成重试、预览和导出。
 
+界面参考 gptimagemt，使用整页工作台：顶部操作、横排工作区、素材与需求输入、社媒贴文预览及配图作品。设置和图片详情均在页面内切换，没有工作台弹窗或遮罩；点击配图即可预览，按 Escape 返回。手机使用单列、可横向滚动的工作区导航和适合触控的输入控件。
+
 当前为纯静态网页。打开即可浏览，不需要访问口令、环境变量、云函数或 n8n。API 接入参照 goog205118-art/gptimagemt：在网页设置中填写自己的地址和 Key，由浏览器直接调用供应商。
 
 ## Vercel 部署
@@ -32,7 +34,11 @@
 ~~~sh
 node scripts/serve.mjs
 node scripts/check.mjs
+node tests/page-smoke.mjs
+node tests/workspace-layout.mjs
 ~~~
+
+两个浏览器测试需已安装 Playwright 与 Chromium；可用 `PLAYWRIGHT_MODULE_URL` 指定 Playwright 模块 URL，`CHROMIUM_EXECUTABLE` 指定浏览器路径。布局测试覆盖 320–1920px 的 10 档宽度；详细结果见 [VALIDATION.md](docs/VALIDATION.md)，设计约定见 [DESIGN.md](docs/DESIGN.md)。
 
 或在 Windows 双击 start.cmd。打开 http://127.0.0.1:8787。此预览程序只发布静态文件，不处理模型请求。
 
