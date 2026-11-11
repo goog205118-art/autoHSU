@@ -12,7 +12,7 @@
 | Root Directory | 仓库根目录 `./` |
 | Build Command | 自动读取 `vercel.json` 中的 `node scripts/check.mjs` |
 | Output Directory | `public` |
-| Node.js | 选择支持的 Node 22 或 24 |
+| Node.js | `package.json` 固定为 22.x，已用 22.23.4 验证 |
 
 根目录就是当前项目目录，不需要填写 `outputs/veo-social-standalone`。
 
@@ -60,7 +60,7 @@ Vercel 的 Production、Preview 环境变量分别设置；更新变量后需 Re
 
 打开部署地址，确认：输入访问口令可以进入；设置页显示文本/图片已配置；上传一张商品图，先选择 1 张配图测试完整链路；成功后再使用多图并发。
 
-构建阶段会运行语法检查与 11 项本机模拟接口测试。仓库中没有真实供应商密钥，部署成功不代表供应商鉴权和余额已经验证。
+构建阶段会运行语法检查与 12 项模拟接口测试。仓库中没有真实供应商密钥，部署成功不代表供应商鉴权和余额已经验证。
 
 Vercel 参考文档：
 

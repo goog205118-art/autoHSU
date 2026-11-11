@@ -4,7 +4,7 @@ import http from 'node:http';
 import { once } from 'node:events';
 import { createApp } from '../server.mjs';
 import { readConfig } from '../server/config.mjs';
-import { extractImage, parseCopy, validateInput } from '../server/providers.mjs';
+import { extractImage, generateImage, parseCopy, validateInput } from '../server/providers.mjs';
 import { createSecurity } from '../server/security.mjs';
 
 const pixel = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg==';
@@ -130,6 +130,43 @@ test('failed jobs, invalid model output, and upstream auth errors are surfaced w
     mode = 'failed'; result = await post(base, '/api/images'); assert.equal(result.status, 502); assert.match((await result.json()).error, /任务失败/);
     mode = 'pending'; settings.pollTimeout = 10; settings.pollInterval = 2; result = await post(base, '/api/images'); assert.equal(result.status, 502); assert.match((await result.json()).error, /轮询超时/);
   } finally { await close(server); await close(upstream); }
+});
+
+test('poll deadline timeouts remain distinct from shorter API timeouts and upstream failures', async (t) => {
+  // Fix the clock and inject failures so this regression needs no millisecond race.
+  t.mock.method(Date, 'now', () => 1000);
+  const timeouts = [];
+  t.mock.method(AbortSignal, 'timeout', (milliseconds) => {
+    timeouts.push(milliseconds);
+    return new AbortController().signal;
+  });
+  const settings = config('https://upstream.invalid');
+  settings.image = { ...settings.image, provider: 'custom', submitUrl: 'https://upstream.invalid/submit', pollUrl: 'https://upstream.invalid/poll/{taskId}' };
+  settings.pollTimeout = 100;
+  let phase, failure, calls;
+  t.mock.method(globalThis, 'fetch', async (url) => {
+    calls++;
+    if (url.endsWith('/submit')) return new Response(JSON.stringify({ task_id: 'job', status: 'processing' }));
+    if (phase === 'headers') throw failure;
+    return { text: async () => { throw failure; } };
+  });
+  for (phase of ['headers', 'body']) {
+    for (const scenario of [
+      { timeout: 1000, failure: new DOMException('expired', 'TimeoutError'), expected: /任务轮询超时/ },
+      { timeout: 20, failure: new DOMException('expired', 'TimeoutError'), expected: /上游 API 请求超时/ },
+      { timeout: 1000, failure: new TypeError('connection failed'), expected: /无法连接上游 API/ }
+    ]) {
+      settings.timeout = scenario.timeout;
+      failure = scenario.failure; calls = 0; timeouts.length = 0;
+      await assert.rejects(generateImage(input, settings), (error) => {
+        assert.equal(error.status, 502);
+        assert.match(error.message, scenario.expected);
+        return true;
+      });
+      assert.equal(calls, 2);
+      assert.deepEqual(timeouts, [scenario.timeout, Math.min(scenario.timeout, settings.pollTimeout)]);
+    }
+  }
 });
 
 test('invalid requests are rejected before making any model calls', async () => {

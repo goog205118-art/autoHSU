@@ -2,7 +2,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { isReady } from './config.mjs';
 
 export class ApiError extends Error {
-  constructor(message, status = 502) { super(message); this.status = status; }
+  constructor(message, status = 502, options) { super(message, options); this.status = status; }
 }
 
 export const RATIOS = new Set(['1:1', '4:5', '9:16', '16:9', '2:3', '3:2']);
@@ -32,12 +32,14 @@ function redact(message, key) {
   return key ? String(message).replaceAll(key, '[REDACTED]') : String(message);
 }
 async function fetchJson(url, options, config, key) {
-  let response;
-  try { response = await fetch(url, { ...options, redirect: 'error', signal: AbortSignal.timeout(config.timeout) }); }
-  catch (error) {
-    throw new ApiError(error.name === 'TimeoutError' ? '上游 API 请求超时' : '无法连接上游 API，请检查地址与网络');
+  let response, body;
+  try {
+    response = await fetch(url, { ...options, redirect: 'error', signal: AbortSignal.timeout(config.timeout) });
+    body = await response.text();
   }
-  const body = await response.text();
+  catch (error) {
+    throw new ApiError(error.name === 'TimeoutError' ? '上游 API 请求超时' : '无法连接上游 API，请检查地址与网络', 502, { cause: error });
+  }
   let data;
   try { data = JSON.parse(body); }
   catch { throw new ApiError(`上游 API 返回非 JSON 数据 (HTTP ${response.status})`); }
@@ -151,8 +153,16 @@ export async function generateImage(input, config) {
       const remaining = deadline - Date.now();
       if (remaining <= 0) throw new ApiError('图片 API 任务轮询超时');
       await delay(Math.min(config.pollInterval, remaining));
-      if (Date.now() >= deadline) throw new ApiError('图片 API 任务轮询超时');
-      raw = await fetchJson(service.pollUrl.replaceAll('{taskId}', encodeURIComponent(String(taskId))), { headers: { Authorization: `Bearer ${service.key}` } }, { ...config, timeout: Math.min(config.timeout, deadline - Date.now()) }, service.key);
+      const pollBudget = deadline - Date.now();
+      if (pollBudget <= 0) throw new ApiError('图片 API 任务轮询超时');
+      try {
+        raw = await fetchJson(service.pollUrl.replaceAll('{taskId}', encodeURIComponent(String(taskId))), { headers: { Authorization: `Bearer ${service.key}` } }, { ...config, timeout: Math.min(config.timeout, pollBudget) }, service.key);
+      } catch (error) {
+        // A request capped by the task deadline has exhausted the polling budget.
+        // Preserve a shorter, independent API timeout and other upstream errors.
+        if (pollBudget <= config.timeout && error.cause?.name === 'TimeoutError') throw new ApiError('图片 API 任务轮询超时');
+        throw error;
+      }
     }
   } else throw new ApiError('不支持的图片 API 类型', 503);
   return assertImage(extractImage(raw));
